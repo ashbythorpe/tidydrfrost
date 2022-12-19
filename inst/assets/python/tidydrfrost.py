@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime, timedelta
 from time import sleep
 
-def create_driver(webdriver, Service):
+def create_driver():
   driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
   return driver
 
@@ -34,6 +34,9 @@ def times_tables_iter(driver):
   
   n_answered = 0
   start = datetime.utcnow()
+  
+  # Stop if 30 seconds pass or if 30 questions are answered
+  # Adjust this to get a higher score
   while (datetime.utcnow() - start < timedelta(seconds=30)) and n_answered < 30:
     try:
       question_el = driver.find_element(By.ID, "question")
@@ -43,7 +46,10 @@ def times_tables_iter(driver):
       answer = round(eval(question))
       answer_box.clear()
       answer_box.send_keys(answer)
+      # Wait for 0.2 seconds between each question
+      # Could probably be shorter
       sleep(0.2)
       n_answered += 1
     except:
+      # Stop on error
       break
