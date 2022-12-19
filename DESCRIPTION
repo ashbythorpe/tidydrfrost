@@ -13,3 +13,5 @@ RoxygenNote: 7.2.3
 Imports: 
     keyring,
     reticulate
+URL: https://github.com/ashbythorpe/tidydrfrost
+BugReports: https://github.com/ashbythorpe/tidydrfrost/issues
