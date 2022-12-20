@@ -14,9 +14,14 @@ dr_frost_account <- function(email = NULL, keyring = NULL) {
   
   cli::cli_alert_success("Password set.")
   
-  if(length(usernames) == 0) {
+  default <- tryCatch(
+    keyring::key_get("tidydrfrost Default email", keyring = keyring),
+    error = function(c) NULL
+  )
+  
+  if(is.null(default)) {
     cli::cli_alert_info("Setting {.email {email}} as default account.")
-    keyring::key_set_with_value("tidydrfrost Default email", email)
+    keyring::key_set_with_value("tidydrfrost Default email", password = email)
     cli::cli_alert_success("Default account set.")
   }
 }
