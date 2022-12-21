@@ -18,7 +18,7 @@ perform_tasks <- function(tasks = dr_frost_tasks(), email = NULL,
   cli::cli_alert_success("Tasks finished.")
   
   if(end) {
-    tdf$end_session(driver)
+    tdf$driver_utils$end_session(driver)
   }
   
   invisible(NULL)
@@ -30,11 +30,12 @@ perform_task <- function(task, driver) {
   rlang::try_fetch({
     switch(
       task,
-      addition_subtraction = tdf$addition_subtraction(driver),
-      multiplication = tdf$multiplication(driver)
+      addition_subtraction = tdf$KS3$Number$addition_subtraction(driver),
+      multiplication = tdf$KS3$Number$multiplication(driver)
     )
     cli::cli_alert_success("Task completed.")
   }, error = function(c) {
+    print(c)
     cli::cli_alert_danger("Task failed.")
   })
 }
