@@ -15,14 +15,21 @@ def addition_subtraction(driver):
   driver.find_element(By.ID, "explorer-selection-practise").click()
   Select(driver.find_element(By.ID, "task-numquestions")).select_by_value('35')
   driver.find_element(By.ID, "but-1-0").click()
-
-  for a in range(50):
+  
+  cum_errors = 0
+  
+  while cum_errors < 5:
+    try:
       elem = driver.find_element(By.CLASS_NAME, "question-content")\
         .find_elements(By.TAG_NAME, "p")[1]
       question = elem.text
       question = question.replace("−", "-")
       answer = eval(question)
       answer_question(driver, answer)
+      cum_errors = 0
+    except:
+      pass
+      cum_errors += 1
 
 def multiplication(driver):
   driver.get("https://www.drfrostmaths.com/explorer.php?noid=175")

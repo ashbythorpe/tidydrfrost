@@ -1,47 +1,66 @@
 perform_tasks <- function(tasks = dr_frost_tasks(), email = NULL, 
                           password = NULL, keyring = NULL, end = TRUE) {
-  vctrs::vec_assert(tasks, character())
-  if(length(tasks) == 0) {
-    return()
-  }
-  tasks <- tasks[tasks %in% dr_frost_tasks()]
-  if(length(tasks) == 0) {
-    return()
+  tasks <- get_tasks(tasks)
+  if(is.null(tasks)) {
+    cli::cli_alert_info("No tasks specified.")
+    return(result_init)
   }
   
   driver <- driver_setup(email, password, keyring)
   
   cli::cli_alert_info("Beginning tasks.")
   
-  purrr::walk(tasks, perform_task, driver = driver)
+  results <- lapply(tasks, perform_task, driver = driver)
+  results_df <- vctrs::vec_rbind(result_init,!!!results)
   
-  cli::cli_alert_success("Tasks finished.")
+  if(!any(results_df$completed)) {
+    cli::cli_alert_danger("All tasks failed.")
+  } else {
+    total_points <- sum(results_df$points, na.rm = TRUE)
+    cli::cli_alert_success("Tasks finished.")
+    cli::cli_alert_success("Total points: {.val {total_points}}.")
+  }
   
   if(end) {
     tdf$driver_utils$end_session(driver)
   }
   
-  invisible(NULL)
+  invisible(results_df)
 }
 
 perform_task <- function(task, driver) {
   cli::cli_alert_info("Task: {.val {task}}.")
+  points <- NA
+  error <- NA
   
-  rlang::try_fetch({
+  error <- try({
     switch(
       task,
       addition_subtraction = tdf$KS3$Number$addition_subtraction(driver),
-      multiplication = tdf$KS3$Number$multiplication(driver)
+      multiplication = tdf$KS3$Number$multiplication(driver),
+      pictoral_division = tdf$KS3$Number$pictoral_division(driver),
+      division = tdf$KS3$Number$division(driver)
     )
+    points <- reticulate::py_to_r(tdf$utils$get_points(driver))
     cli::cli_alert_success("Task completed.")
-  }, error = function(c) {
-    print(c)
+    cli::cli_alert_success("Points obtained: {.val {points}}.")
+  }, silent = TRUE)
+  
+  if(is.na(points)) {
     cli::cli_alert_danger("Task failed.")
-  })
-}
-
-dr_frost_tasks <- function() {
-  c(
-    "addition_subtraction", "multiplication"
-  )
+    res <- data.frame(
+      task = task,
+      completed = FALSE,
+      points = NA
+    )
+    res$error <- list(error)
+    res
+  } else {
+    data.frame(
+      task = task,
+      completed = TRUE,
+      points = points,
+      error = NA
+    )
+  }
 }

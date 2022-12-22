@@ -27,3 +27,5 @@ def login(driver, eml, pwd):
   
   login = driver.find_element(By.ID, "login-submit-button")
   login.click()
+  
+  sleep(1)

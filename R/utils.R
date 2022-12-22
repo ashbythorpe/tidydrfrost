@@ -4,7 +4,7 @@ get_account <- function(email, password, keyring) {
     if(nrow(accounts) == 0) {
       cli::cli_abort(c(
         "No Dr Frost Accounts registered.",
-        "i" = "Create an account with {.fun dr_frost_account}"
+        "i" = "Create an account with {.fun dr_frost_account}."
       ))
     }
   }
@@ -23,7 +23,7 @@ get_account <- function(email, password, keyring) {
   }
   
   if(is.null(password)) {
-    cli::cli_alert_info("Getting account password for {.email {email}}")
+    cli::cli_alert_info("Getting account password for {.email {email}}.")
     
     password <- rlang::try_fetch(
       keyring::key_get(
