@@ -18,7 +18,8 @@ Imports:
     reticulate,
     rlang,
     vctrs
-URL: https://github.com/ashbythorpe/tidydrfrost
+URL: https://github.com/ashbythorpe/tidydrfrost,
+    https://ashbythorpe.github.io/tidydrfrost/
 BugReports: https://github.com/ashbythorpe/tidydrfrost/issues
 Depends: 
     R (>= 2.10)

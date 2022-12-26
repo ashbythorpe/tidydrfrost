@@ -4,14 +4,15 @@
 \name{tidydrfrost-package}
 \alias{tidydrfrost}
 \alias{tidydrfrost-package}
-\title{tidydrfrost: What the Package Does (One Line, Title Case)}
+\title{tidydrfrost: Automated Tasks and Point Farmer for Dr Frost Maths}
 \description{
-What the package does (one paragraph).
+Automates a set of tasks in Dr Frost Maths (https://www.drfrostmaths.com/). Provides a robust and secure login method and a detailed Command Line Interface to make the completing tasks easy and robust.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/ashbythorpe/tidydrfrost}
+  \item \url{https://ashbythorpe.github.io/tidydrfrost/}
   \item Report bugs at \url{https://github.com/ashbythorpe/tidydrfrost/issues}
 }
 
