@@ -4,6 +4,6 @@ tdf <- NULL
   tdf <<- reticulate::import_from_path(
     "tidydrfrost",
     system.file("assets/python", package = "tidydrfrost"),
-    convert = FALSE, delay_load = TRUE
+    delay_load = TRUE
   )
 }

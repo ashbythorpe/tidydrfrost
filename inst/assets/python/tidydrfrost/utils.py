@@ -1,29 +1,102 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selene import browser, be, have
+from selene.api import s, ss
+import selenium
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import Select
+import time
 from time import sleep
-import re
+import tidydrfrost.robust_utils as robust
 
-def answer_question(driver, answer):
-  answer_input = driver.find_element(By.CLASS_NAME, "answer-content")\
-    .find_element(By.TAG_NAME, "input")
-  answer_input.clear()
-  answer_input.send_keys(answer)
-  submit_button = driver.find_element(By.CSS_SELECTOR, "input[type='submit']")
-  submit_button.click()
-  sleep(1)
+def start_task(url, n):
+  robust.get_with_retry(url, ".skill")
+  
+  ss(".skill")[n].element("input").click()
+  
+  s("#explorer-selection-practise").click()
+  start = s("#but-1-0")
+  start.should(be.visible)
+  Select(s("#task-numquestions").get_actual_webelement()).select_by_value('35')
+  start.click()
+
+def get_text(elem):
   try:
-    # Close modals (e.g. trophies)
-    driver.find_element(By.CLASS_NAME, "close-modal").click()
+    return elem.text
   except:
-    pass
-  next_question = driver.find_element(By.ID, "nextquestion-button")
-  ActionChains(driver).move_to_element(next_question).click(next_question).perform()
-  sleep(1)
+    return elem.text
 
-def get_points(driver):
-  points_text = driver.find_element(By.CLASS_NAME, "taskcomplete")\
-  .find_elements(By.TAG_NAME, "p")[0]
-  points = int(re.search("[0-9]+", points_text.text).group(0))
-  return points
+def set_value(elem, value):
+  try:
+    elem.set(value)
+  except:
+    elem.set(value)
+
+def answer_question(answer, last_question = False, answer_input = None):
+  if answer_input == None:
+    answer_input = s(".answer-content").element("input")
+    
+  answer_input.set(answer)
+  s("input[type='submit']").click()
+  final_checks(last_question)
+
+def try_two_answers(answers, last_question = False, answer_input = None):
+  if answer_input == None:
+    answer_input = s(".answer-content").element("input")
+  
+  a1 = answers[0]
+  a2 = answers[1]
+  
+  answer_input.set(a1)
+  s("input[type='submit']").click()
+  time_end = time.time() + 10
+  while time.time() < time_end:
+    if answer_is_incorrect():
+      s(".close-modal").click()
+      break
+    if detect_response(last_question):
+      final_checks(last_question)
+      return True
+    sleep(0.5)
+  else:
+    raise TimeoutError("Could not determine question response.")
+  robust.close_modals()
+  answer_input.set(a2)
+  s("input[type='submit']").click()
+  final_checks(last_question)
+
+def answer_is_incorrect():
+  incorrect_messages = [
+    "You may, wink wink, wish to reconsider your answer. Wink...", 
+    "*Cough* *Cough* Perhaps try another answer. *Cough*", 
+    "Psstt. A little bird told me that you may want to consider another answer. Wink wink.", 
+    "This is Agent Winksworth. Middle name... 'That-Answer-Is-Wrong-Consider-Another'. [Exits via helicopter]", 
+    "You may want to review your answer. Winkety wink.", 
+    "This is Sir Winkington of Winksdon. One would like to inform you that you may wish to reconsider your answer."
+  ]
+  if ss(".modal").size() > 0:
+    cond = (s(".modal").elements("p").size() > 1 and 
+              s(".modal").elements("p")[1].text in incorrect_messages)
+    return cond
+
+def detect_response(last_question):
+  if last_question:
+    return ss(".taskcomplete").size() > 0
+  else:
+    return s("#doquestion-response").is_displayed()
+
+def final_checks(last_question):
+  if not last_question:
+    robust.close_modals()
+    question_id = s(".question-form").get_attribute("id")
+    s("#nextquestion-button").scroll_to().click()
+    s(".question-form").should_not(have.attribute("id", question_id))
+    s(".question-content").element("p").should(be.visible)
+    s(".answer-content").element("input").should(be.visible)
+  else:
+    s(".taskcomplete").should(be.visible)
+
+while True:
+  if True:
+    break
+else:
+  print("a")
+

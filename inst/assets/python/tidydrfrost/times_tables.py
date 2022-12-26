@@ -1,65 +1,60 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
+from selene import browser, by, be, have
+from selene.api import s, ss
 from time import sleep
+import tidydrfrost.utils as utils
+import tidydrfrost.robust_utils as robust
 
-def times_tables_iter(driver):
-  driver.get("https://www.drfrostmaths.com/timestables-game.php")
+def times_tables_iter():
+  robust.get_with_retry(
+    "https://www.drfrostmaths.com/timestables-game.php",
+    "#question"
+  )
   
-  sleep(1)
+  s("#question").element("a").click()
+  question_el = s("#question")
+  answer_box = s("#calculator-display")
   
-  start_div = driver.find_element(By.ID, "question")
-  start_button = start_div.find_element(By.TAG_NAME, "a")
-  start_button.click()
-  question_el = driver.find_element(By.ID, "question")
-  answer_box = driver.find_element(By.ID, "calculator-display")
-  
-  cum_errors = 0
-  
-  while cum_errors < 4:
+  for i in range(100):
     try:
       question = question_el.text
       question = question.replace("×", "*")
       question = question.replace("÷", "/")
       answer = round(eval(question))
-      answer_box.send_keys(answer)
-      cum_errors = 0
+      answer_box.set(answer)
     except:
-      cum_errors += 1
+      print("Error")
 
 def times_tables_game(driver, n):
+  robust.get_with_retry(
+    "https://www.drfrostmaths.com/timestables-game.php?id=" + str(n),
+    "#question"
+  )
   driver.get("https://www.drfrostmaths.com/timestables-game.php?id=" + str(n))
-  start_div = driver.find_element(By.ID, "question")
-  start_button = start_div.find_element(By.TAG_NAME, "a")
-  start_button.click()
-  answer_box = driver.find_element(By.ID, "calculator-display")
+  s("#question").element("a").click()
+  answer_box = s("#calculator-display")
   
-  for a in range(40):
+  for i in range(40):
     try:
+      question_el = s("#question")
       if n == 4:
         # Powers
-        question_el = driver.find_element(By.ID, "question")
-        power_el = question_el.find_element(By.TAG_NAME, "sup")
+        power_el = question_el.element("sup")
         relevant_question = question_el.text[0:-1]
         question = relevant_question + " ** " + power_el.text
         answer = round(eval(question))
       elif n == 28:
         # Square numbers
-        question_el = driver.find_element(By.ID, "question")
         x = eval(question_el.text[0:-1])
         answer = x * x
       elif n == 29:
         # Cube numbers
-        question_el = driver.find_element(By.ID, "question")
         x = eval(question_el.text[0:-1])
         answer = x * x * x
       else:
-        question_el = driver.find_element(By.ID, "question")
         question = question_el.text
         question = question.replace("×", "*")
         question = question.replace("÷", "/")
         answer = round(eval(question))
-      answer_box.clear()
-      answer_box.send_keys(answer)
+      answer_box.set(answer)
     except:
-      break
+      print("Error")

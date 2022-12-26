@@ -1,8 +1,12 @@
+library(magrittr)
+
 tasks_df <- tibble::tribble(
   ~topic, ~subtopic, ~task_name, ~description,
   "KS3 Number", "Arithmetic Operations", "addition_subtraction", "Add and subtract whole numbers.",
   "KS3 Number", "Arithmetic Operations", "multiplication", "Multiply numbers up to 3 digit by 3 digit.",
-  "KS3 Number", "Arithmetic Operations", "pictoral_division", "Solve one step multiplication and division problems by using pictorial representations and arrays."
+  "KS3 Number", "Arithmetic Operations", "pictoral_division", "Solve one step multiplication and division problems by using pictorial representations and arrays.",
+  "KS3 Number", "Arithmetic Operations", "division", "Divide numbers.",
+  "KS3 Number", "Arithmetic Operations", "number_facts", " Using number facts to solve connected calculations."
 ) %>%
   dplyr::mutate(string = paste(topic, subtopic, task_name, description))
 

@@ -1,31 +1,35 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+from selene import browser, by, config
+from selene.api import s, ss
 from time import sleep
+import re
+from tidydrfrost.robust_utils import get_with_retry
 
-def create_driver():
-  driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-  return driver
-
-def end_session(driver):
+def end_session():
   sleep(2)
   
-  driver.quit()
+  browser.close()
 
-def login(driver, eml, pwd):
-  driver.get("https://www.drfrostmaths.com/login.php")
+def login(eml, pwd):
+  config.timeout = 10
   
-  email = driver.find_element(By.NAME, "login-email")
-  email.clear()
-  email.send_keys(eml)
+  get_with_retry(
+    "https://www.drfrostmaths.com/login.php",
+    by.name("login-email")
+  )
   
-  password = driver.find_element(By.NAME, "login-password")
-  password.clear()
-  password.send_keys(pwd)
+  s(by.name("login-email")).set(eml)
   
-  login = driver.find_element(By.ID, "login-submit-button")
-  login.click()
+  s(by.name("login-password")).set(pwd)
   
-  sleep(1)
+  s("#login-submit-button").click()
+  
+  modals = ss(".modal")
+  if modals.size() > 0:
+    return False
+  
+  return True
+
+def get_points():
+  points_text = s(".taskcomplete").elements("p")[0]
+  points = int(re.search("[0-9]+", points_text.text).group(0))
+  return points

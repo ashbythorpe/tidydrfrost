@@ -1,90 +1,146 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.action_chains import ActionChains
+from selene import browser, by, be, have
+from selene.api import s, ss
 from time import sleep
 import re
-from tidydrfrost.utils import answer_question
+import math
+import tidydrfrost.utils as utils
+import tidydrfrost.robust_utils as robust
 
-def addition_subtraction(driver):
-  driver.get("https://www.drfrostmaths.com/explorer.php?noid=175")
-  elem = driver.find_elements(By.CLASS_NAME, "skill")[0]\
-    .find_element(By.TAG_NAME, "input")
-  elem.click()
-  driver.find_element(By.ID, "explorer-selection-practise").click()
-  Select(driver.find_element(By.ID, "task-numquestions")).select_by_value('35')
-  driver.find_element(By.ID, "but-1-0").click()
+def addition_subtraction():
+  utils.start_task(
+    "https://www.drfrostmaths.com/explorer.php?noid=175", 
+    0
+  )
   
-  cum_errors = 0
+  questions_answered = 0
+  i = 0
   
-  while cum_errors < 5:
+  while questions_answered < 35 and i < 100:
     try:
-      elem = driver.find_element(By.CLASS_NAME, "question-content")\
-        .find_elements(By.TAG_NAME, "p")[1]
-      question = elem.text
+      element = s(".question-content").elements("p")[1]
+      question = element.text
       question = question.replace("−", "-")
       answer = eval(question)
-      answer_question(driver, answer)
-      cum_errors = 0
+      utils.answer_question(answer, questions_answered == 34)
+      questions_answered += 1
     except:
-      pass
-      cum_errors += 1
+      print("Error")
+    i += 1
 
-def multiplication(driver):
-  driver.get("https://www.drfrostmaths.com/explorer.php?noid=175")
-  elem = driver.find_elements(By.CLASS_NAME, "skill")[2]\
-    .find_element(By.TAG_NAME, "input")
-  ActionChains(driver).move_to_element(elem).click(elem).perform()
-  driver.find_element(By.ID, "explorer-selection-practise").click()
-  Select(driver.find_element(By.ID, "task-numquestions")).select_by_value('35')
-  driver.find_element(By.ID, "but-1-0").click()
+def multiplication():
+  utils.start_task(
+    "https://www.drfrostmaths.com/explorer.php?noid=175", 
+    2
+  )
   
-  for a in range(50):
+  questions_answered = 0
+  i = 0
+  
+  while questions_answered < 35 and i < 100:
     try:
-      elem = driver.find_element(By.CLASS_NAME, "question-content")\
-        .find_elements(By.TAG_NAME, "p")[1]
-      question = elem.text
+      element = s(".question-content").elements("p")[1]
+      question = element.text
       question = question.replace("×", "*")
       answer = eval(question)
-      answer_question(driver, answer)
+      utils.answer_question(answer, questions_answered == 34)
+      questions_answered += 1
     except:
-      pass
+      print("Error")
+    i += 1
 
-def pictoral_division(driver):
-  driver.get("https://www.drfrostmaths.com/explorer.php?noid=175")
-  elem = driver.find_elements(By.CLASS_NAME, "skill")[3]\
-    .find_element(By.TAG_NAME, "input")
-  ActionChains(driver).move_to_element(elem).click(elem).perform()
-  driver.find_element(By.ID, "explorer-selection-practise").click()
-  Select(driver.find_element(By.ID, "task-numquestions")).select_by_value('35')
-  driver.find_element(By.ID, "but-1-0").click()
+def pictoral_division():
+  utils.start_task(
+    "https://www.drfrostmaths.com/explorer.php?noid=175", 
+    3
+  )
   
-  for a in range(50):
+  questions_answered = 0
+  i = 0
+  
+  while questions_answered < 35 and i < 100:
     try:
-      elem = driver.find_element(By.CLASS_NAME, "question-content")\
-        .find_element(By.TAG_NAME, "p")
-      question = re.search("[0-9]+.[0-9]+", elem.text).group(0)
+      element = s(".question-content").element("p")
+      question = re.search("[0-9]+.[0-9]+", element.text).group(0)
       question = question.replace("÷", "/")
-      answer = round(eval(question))
-      answer_question(driver, answer)
+      answer = eval(question)
+      utils.answer_question(answer, questions_answered == 34)
+      questions_answered += 1
     except:
-      pass
+      print("Error")
+    i += 1
 
-def division(driver):
-  driver.get("https://www.drfrostmaths.com/explorer.php?noid=175")
-  elem = driver.find_elements(By.CLASS_NAME, "skill")[4]\
-    .find_element(By.TAG_NAME, "input")
-  ActionChains(driver).move_to_element(elem).click(elem).perform()
-  driver.find_element(By.ID, "explorer-selection-practise").click()
-  Select(driver.find_element(By.ID, "task-numquestions")).select_by_value('35')
-  driver.find_element(By.ID, "but-1-0").click()
+def division():
+  utils.start_task(
+    "https://www.drfrostmaths.com/explorer.php?noid=175", 
+    4
+  )
   
-  for a in range(50):
-      elem = driver.find_element(By.CLASS_NAME, "question-content")\
-        .find_elements(By.TAG_NAME, "p")[1]
-      question = elem.text
+  questions_answered = 0
+  i = 0
+  
+  while questions_answered < 35 and i < 100:
+    #try:
+      element = s(".question-content").elements("p")[1]
+      question = element.text
+      answer_boxes = s(".answer-content").elements("input")
+      if answer_boxes.size() == 1:
+        try:
+          question = question.replace("÷", "/")
+          answer = eval(question)
+        except:
+          elem0 = s(".question-content").elements("p")[0]
+          question = elem0.text + element.text
+          numbers = re.findall("[0-9]+", question)
+          n1 = int(numbers[0])
+          n2 = int(numbers[1])
+          if n1 >= n2:
+            answer = n1/n2
+          else:
+            answer = n2/n1
+          answers = [math.floor(answer), math.ceil(answer)]
+          utils.try_two_answers(answers, questions_answered == 34)
+          questions_answered += 1
+          continue
+        utils.answer_question(answer, questions_answered == 34)
+        questions_answered += 1
+      elif answer_boxes.size() == 2:
+        numbers = re.findall("[0-9]+", question)
+        n1 = int(numbers[0])
+        n2 = int(numbers[1])
+        answer_boxes[0].set(n1 // n2)
+        utils.answer_question(n1 % n2, questions_answered == 34, answer_boxes[1])
+        questions_answered += 1
+      else:
+        numbers = re.findall("[0-9]+", question)
+        n1 = int(numbers[0])
+        n2 = int(numbers[1])
+        answer_boxes[0].set(n1 // n2)
+        answer_boxes[1].set(n1 % n2)
+        utils.answer_question(n2, questions_answered == 34, answer_boxes[2])
+        questions_answered += 1
+    #except:
+    #  print("Error")
+      i += 1
+
+def number_facts():
+  utils.start_task(
+    "https://www.drfrostmaths.com/explorer.php?noid=175", 
+    7
+  )
+  
+  questions_answered = 0
+  i = 0
+  
+  while questions_answered < 35 and i < 100:
+    try:
+      element = s(".question-content").elements("p")[3]
+      question = element.text
+      question = question.replace("−", "-")
+      question = question.replace("×", "*")
       question = question.replace("÷", "/")
-      answer = round(eval(question))
-      answer_question(driver, answer)
-  
+      answer = eval(question)
+      utils.answer_question(answer, questions_answered == 34)
+      questions_answered += 1
+    except:
+      print("Error")
+    i += 1

@@ -1,16 +1,17 @@
 perform_tasks <- function(tasks = dr_frost_tasks(), email = NULL, 
-                          password = NULL, keyring = NULL, end = TRUE) {
+                          password = NULL, keyring = NULL, end = TRUE,
+                          safely = TRUE) {
   tasks <- get_tasks(tasks)
   if(is.null(tasks)) {
     cli::cli_alert_info("No tasks specified.")
     return(result_init)
   }
   
-  driver <- driver_setup(email, password, keyring)
+  driver_setup(email, password, keyring)
   
   cli::cli_alert_info("Beginning tasks.")
   
-  results <- lapply(tasks, perform_task, driver = driver)
+  results <- lapply(tasks, perform_task, safely = safely)
   results_df <- vctrs::vec_rbind(result_init,!!!results)
   
   if(!any(results_df$completed)) {
@@ -22,29 +23,41 @@ perform_tasks <- function(tasks = dr_frost_tasks(), email = NULL,
   }
   
   if(end) {
-    tdf$driver_utils$end_session(driver)
+    tdf$driver_utils$end_session()
   }
   
   invisible(results_df)
 }
 
-perform_task <- function(task, driver) {
+perform_task <- function(task, safely) {
   cli::cli_alert_info("Task: {.val {task}}.")
   points <- NA
   error <- NA
-  
-  error <- try({
+  if(safely) {
+    error <- try({
+      switch(
+        task,
+        addition_subtraction = tdf$KS3$Number$addition_subtraction(),
+        multiplication = tdf$KS3$Number$multiplication(),
+        pictoral_division = tdf$KS3$Number$pictoral_division(),
+        division = tdf$KS3$Number$division()
+      )
+      points <- tdf$driver_utils$get_points()
+      cli::cli_alert_success("Task completed.")
+      cli::cli_alert_success("Points obtained: {.val {points}}.")
+    }, silent = TRUE)
+  } else {
     switch(
       task,
-      addition_subtraction = tdf$KS3$Number$addition_subtraction(driver),
-      multiplication = tdf$KS3$Number$multiplication(driver),
-      pictoral_division = tdf$KS3$Number$pictoral_division(driver),
-      division = tdf$KS3$Number$division(driver)
+      addition_subtraction = tdf$KS3$Number$addition_subtraction(),
+      multiplication = tdf$KS3$Number$multiplication(),
+      pictoral_division = tdf$KS3$Number$pictoral_division(),
+      division = tdf$KS3$Number$division()
     )
-    points <- reticulate::py_to_r(tdf$utils$get_points(driver))
+    points <- tdf$driver_utils$get_points()
     cli::cli_alert_success("Task completed.")
     cli::cli_alert_success("Points obtained: {.val {points}}.")
-  }, silent = TRUE)
+  }
   
   if(is.na(points)) {
     cli::cli_alert_danger("Task failed.")
