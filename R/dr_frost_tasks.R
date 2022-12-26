@@ -1,4 +1,60 @@
+#' Get the set of available tasks
+#' 
+#' Retrieve a set of tasks that can be completed in 
+#' [Dr Frost Maths](https://www.drfrostmaths.com/), choosing tasks to include
+#' and exclude.
+#' 
+#' @param include A character vector of tasks to include. If `NULL`, all tasks
+#'   will be included.
+#' @param exclude A character vector of tasks to exclude. If `NULL`, no tasks
+#'   will be excluded.
+#' @param x A `dr_frost_tasks` object.
+#' @param ... Not used.
+#'
+#' @details 
+#' If the `include` argument matches a topic, subtopic or task name of any task,
+#' tasks will require a direct match with the string to be included. Otherwise,
+#' partial matching/pattern recognition will be used to identify matches.
+#' 
+#' The same applies to the `exclude` argument.
+#' 
+#' While this makes specifying tasks simple most of the time, it can sometimes
+#' lead to some unexpected cases where more complex searches result in less
+#' matches.
+#' 
+#' @returns 
+#' A data frame with additional class 'dr_frost_tasks', where each row
+#' describes a task. The table has 4 variables:
+#' \describe{
+#'   \item{topic}{The topic that the task falls under.}
+#'   \item{subtopic}{The subtopic of the task.}
+#'   \item{task_name}{The name of the task.}
+#'   \item{description}{A brief description of the task.}
+#' }
+#' 
+#' @seealso [perform_tasks()]
+#' 
+#' @examples 
+#' dr_frost_tasks()
+#' 
+#' dr_frost_tasks(include = "addition_subtraction")
+#' 
+#' dr_frost_tasks(include = "Arithmetic Operations")
+#' 
+#' dr_frost_tasks(include = "KS3 Number")
+#' 
+#' dr_frost_tasks(include = "KS3", exclude = "Arithmetic")
+#' 
+#' dr_frost_tasks(exclude = "addition")
+#' 
+#' tibble::as_tibble(dr_frost_tasks)
+#' 
+#' @export
 dr_frost_tasks <- function(include = NULL, exclude = NULL) {
+  if(length(include) == 0) {
+    # Use drop = FALSE in case the user doesn't have tibble installed
+    return(tasks_df[FALSE, , drop = FALSE])
+  }
   if(!is.null(include)) {
     vctrs::vec_assert(include, character())
   }
@@ -7,7 +63,7 @@ dr_frost_tasks <- function(include = NULL, exclude = NULL) {
   }
   
   condition <- FALSE
-  if(!is.null(include) && length(include) > 0) {
+  if(!is.null(include)) {
     for(a in include) {
       condition <- condition | create_filter(a)
     }
@@ -21,7 +77,7 @@ dr_frost_tasks <- function(include = NULL, exclude = NULL) {
     }
   }
   
-  tasks_df[condition, names(tasks_df) != "string"]
+  tasks_df[condition, names(tasks_df) != "string", drop = FALSE]
 }
 
 create_filter <- function(x) {
@@ -36,6 +92,8 @@ create_filter <- function(x) {
   }
 }
 
+#' @rdname dr_frost_tasks
+#' 
 #' @export
 print.dr_frost_tasks <- function(x, ...) {
   cat(nrow(x), "Dr Frost tasks\n")
@@ -46,7 +104,7 @@ print.dr_frost_tasks <- function(x, ...) {
     ))
     for(a in unique(x$topic)) {
       cli::cli_h1(a)
-      y <- x[x$topic == a,]
+      y <- x[x$topic == a, , drop = FALSE]
       for(b in unique(y$subtopic)) {
         cli::cli_div(
           cli::cli_h2(b),
@@ -69,7 +127,7 @@ print.dr_frost_tasks <- function(x, ...) {
 
 get_tasks <- function(tasks) {
   if(is.data.frame(tasks)) {
-    tasks <- tasks[tasks$task_name %in% tasks_df$task_name,]
+    tasks <- tasks[tasks$task_name %in% tasks_df$task_name, , drop = FALSE]
     if (nrow(tasks) == 0) {
       return()
     } else {

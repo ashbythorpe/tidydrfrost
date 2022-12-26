@@ -1,4 +1,41 @@
-dr_frost_account <- function(email = NULL, keyring = NULL) {
+#' Store your account details securely
+#' 
+#' Securely store the email and password to your Dr Frost Maths account so that
+#' it can be used between sessions. The 
+#' \link[keyring]{keyring::`keyring-package`} package is used as a backend,
+#' meaning that credentials are stored securely and permanently.
+#' 
+#' @param email The email for your Dr Frost Account. Multiple accounts with
+#'   different emails can be stored.
+#' @param keyring A string, passed into [keyring::key_set()] and 
+#'   [keyring::key_get()]. Use this to store your Dr Frost credentials on a
+#'   custom keyring.
+#' 
+#' @details 
+#' Calling this function should open a prompt, allowing you to enter your
+#' password securely.
+#' 
+#' To change the password stored for a specific email, just call the function
+#' again with the same email.
+#' 
+#' If the account you store is the first to be stored on the specified keyring, 
+#' the account will be marked as a 'default' for the keyring. This means that
+#' when [perform_tasks()] is called without specifying an email, this account
+#' will be used as a default. Change this with [set_default_account()].
+#' 
+#' This means that once you have stored an account, the [perform_tasks()]
+#' function can be called without specifying an email or password.
+#' 
+#' @returns Nothing. This function is called for its side effects.
+#' 
+#' @examples 
+#' \dontrun{
+#'   dr_frost_account("YOUR-EMAIL")
+#'   perform_tasks()
+#' }
+#' 
+#' @export
+dr_frost_account <- function(email, keyring = NULL) {
   vctrs::vec_assert(email, ptype = character(), size = 1)
   
   usernames <- 
@@ -35,9 +72,28 @@ dr_frost_account <- function(email = NULL, keyring = NULL) {
   if(is.null(default)) {
     set_default_account(email, keyring)
   }
+  
+  invisible(NULL)
 }
 
-set_default_account <- function(email, keyring) {
+#' Set the default Dr Frost Maths account
+#' 
+#' Set or change the default email used by the [perform_tasks()] function.
+#' 
+#' @param email The email to use.
+#' @param keyring A string, passed into [keyring::key_set()] and 
+#'   [keyring::key_get()]. Use this if your Dr Frost accounts are
+#'   stored on a custom keyring.
+#' 
+#' @returns Nothing. This function is called for its side effects.
+#' 
+#' @examples 
+#' \dontrun{
+#'   set_default_account("YOUR-EMAIL")
+#' }
+#' 
+#' @export
+set_default_account <- function(email, keyring = NULL) {
   cli::cli_alert_info("Setting {.email {email}} as default account.")
   
   rlang::try_fetch(
@@ -49,6 +105,8 @@ set_default_account <- function(email, keyring) {
   )
   
   cli::cli_alert_success("Default account set.")
+  
+  invisible(NULL)
 }
 
 set_key_manually <- function(email, keyring) {
