@@ -4,6 +4,10 @@
 # tidydrfrost
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/ashbythorpe/tidydrfrost/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ashbythorpe/tidydrfrost?branch=master)
+[![R-CMD-check](https://github.com/ashbythorpe/tidydrfrost/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ashbythorpe/tidydrfrost/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 tidydrfrost allows you to automate and complete [Dr Frost
@@ -54,9 +58,32 @@ perform_tasks(tasks)
 Currently the following tasks have been implemented:
 
 ``` r
-dr_frost_tasks()
-#> 0 Dr Frost tasks
+print(dr_frost_tasks(), n = Inf)
+#> # 7 Dr Frost tasks
 #> 
+#> ── KS3 Number ──────────────────────────────────────────────────────────────────
+#> 
+#> ── Arithmetic Operations ──
+#> • addition_subtraction
+#>   Add and subtract whole numbers.
+#> • multiplication
+#>   Multiply numbers up to 3 digit by 3 digit.
+#> • pictoral_division
+#>   Solve one step multiplication and division problems by using pictorial
+#>   representations and arrays.
+#> • division
+#>   Divide numbers.
+#> • number_facts
+#>   Using number facts to solve connected calculations.
+#> 
+#> ── Times tables ────────────────────────────────────────────────────────────────
+#> 
+#> • fixed_time
+#>   You have 30 seconds to answer as many questions as you can on all
+#>   times/divide tables. Can you get on the leaderboard?
+#> • individual_practice
+#>   Practise each times table/divide table separately, with points for accuracy
+#>   and speed.
 ```
 
 ## Logging in

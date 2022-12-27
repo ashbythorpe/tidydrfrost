@@ -79,27 +79,57 @@ perform_task <- function(task) {
   points <- NA
   error <- NA
   
-  rlang::try_fetch({
+  if(task %in% c("fixed_time", "individual_practice")) {
+    res <- switch(
+      task,
+      fixed_time = fixed_time(),
+      individual_practice = individual_practice()
+    )
+    
+    completed <- res$completed
+    points <- res$points
+    error <- res$error
+    if(!completed) {
+      res <- data.frame(
+        task = task,
+        completed = FALSE,
+        points = NA
+      )
+      res$error <- list(error)
+      return(res)
+    } else {
+      return(data.frame(
+        task = task,
+        completed = TRUE,
+        points = points,
+        error = NA
+      ))
+    }
+  }
+  
+  error <- rlang::try_fetch({
     switch(
       task,
-      addition_subtraction = tdf$KS3$Number$addition_subtraction(),
-      multiplication = tdf$KS3$Number$multiplication(),
-      pictoral_division = tdf$KS3$Number$pictoral_division(),
-      division = tdf$KS3$Number$division()
+      addition_subtraction = tdf$KS3_Number$Arithmetic_Operations$addition_subtraction(),
+      multiplication = tdf$KS3_Number$Arithmetic_Operations$multiplication(),
+      pictoral_division = tdf$KS3_Number$Arithmetic_Operations$pictoral_division(),
+      division = tdf$KS3_Number$Arithmetic_Operations$division()
     )
     cli::cli_alert_success("Task completed.")
+    NA
   }, error = function(c) {
-    error <- c
     cli::cli_alert_danger("Task failed.")
+    c
   })
   
   if(is.na(error)) {
-    rlang::try_fetch({
+    error <- rlang::try_fetch({
       points <- tdf$driver_utils$get_points()
       cli::cli_alert_success("Points obtained: {.val {points}}.")
+      NA
     }, error = function(c) {
-      error <- c
       cli::cli_alert_danger("Could not get points.")
+      c
     })
   }
   

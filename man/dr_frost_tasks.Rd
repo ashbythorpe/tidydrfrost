@@ -2,12 +2,9 @@
 % Please edit documentation in R/dr_frost_tasks.R
 \name{dr_frost_tasks}
 \alias{dr_frost_tasks}
-\alias{print.dr_frost_tasks}
 \title{Get the set of available tasks}
 \usage{
 dr_frost_tasks(include = NULL, exclude = NULL)
-
-\method{print}{dr_frost_tasks}(x, ...)
 }
 \arguments{
 \item{include}{A character vector of tasks to include. If \code{NULL}, all tasks
@@ -59,7 +56,7 @@ dr_frost_tasks(include = "KS3", exclude = "Arithmetic")
 
 dr_frost_tasks(exclude = "addition")
 
-tibble::as_tibble(dr_frost_tasks)
+tibble::as_tibble(dr_frost_tasks())
 
 }
 \seealso{

@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # tidydrfrost
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/ashbythorpe/tidydrfrost/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ashbythorpe/tidydrfrost?branch=master)
+[![R-CMD-check](https://github.com/ashbythorpe/tidydrfrost/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ashbythorpe/tidydrfrost/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 tidydrfrost allows you to automate and complete [Dr Frost Maths](https://www.drfrostmaths.com/) tasks using R. This allows points and mastery to be quickly and easily gained.
@@ -58,7 +60,7 @@ perform_tasks(tasks)
 
 Currently the following tasks have been implemented:
 ```{r}
-dr_frost_tasks()
+print(dr_frost_tasks(), n = Inf)
 ```
 
 ## Logging in

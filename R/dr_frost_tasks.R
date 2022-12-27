@@ -47,11 +47,11 @@
 #' 
 #' dr_frost_tasks(exclude = "addition")
 #' 
-#' tibble::as_tibble(dr_frost_tasks)
+#' tibble::as_tibble(dr_frost_tasks())
 #' 
 #' @export
 dr_frost_tasks <- function(include = NULL, exclude = NULL) {
-  if(length(include) == 0) {
+  if(!is.null(include) && length(include) == 0) {
     # Use drop = FALSE in case the user doesn't have tibble installed
     return(tasks_df[FALSE, , drop = FALSE])
   }
@@ -92,24 +92,69 @@ create_filter <- function(x) {
   }
 }
 
-#' @rdname dr_frost_tasks
+#' Printing Dr Frost tasks
+#' 
+#' The `dr_frost_tasks` object has an enhanced printing method, using topics and
+#' subtopics as headers.
+#' 
+#' @param x A `dr_frost_tasks` object.
+#' @param ... Not used.
+#' @param n The maximum number of tasks to show. Excess tasks will be truncated.
+#'   Use `Inf` to show all tasks.
+#' 
+#' @returns `x`, invisibly
+#' 
+#' @examples 
+#' print(dr_frost_tasks())
+#' print(dr_frost_tasks(), n = 5)
 #' 
 #' @export
-print.dr_frost_tasks <- function(x, ...) {
-  cat(nrow(x), "Dr Frost tasks\n")
+print.dr_frost_tasks <- function(x, ..., n = 10) {
+  vctrs::vec_assert(n, size = 1)
+  if(!is.infinite(n)) {
+    n <- vctrs::vec_cast(n, integer())
+  }
+  grey <- cli::make_ansi_style("grey60", grey = TRUE)
+  
+  if(nrow(x) == 0L) {
+    cli::cli_text(grey("# 0 Dr Frost tasks"))
+    return(invisible(x))
+  } else if(n == 0L || (n < 0L && -n >= nrow(x))) {
+    cli::cli_text(grey("# {nrow(x)} Dr Frost task{?s}"))
+    cli::cli_text(grey("… with {nrow(x)} more task{?s}"))
+    cli::cli_text(grey("# ℹ Use `print(n = ...)` to see more tasks"))
+    return(invisible(x))
+  } else if(n < 0L) {
+    excess_tasks <- -n
+    x <- x[-seq_len(-n),]
+  } else if(nrow(x) > n) {
+    excess_tasks <- nrow(x) - n
+    x <- x[seq_len(n),]
+  } else {
+    excess_tasks <- NA
+  }
+  
+  print_dr_frost_tasks(x, excess_tasks, grey)
+  
+  invisible(x)
+}
+
+print_dr_frost_tasks <- function(x, excess_tasks, grey) {
   cli::cli({
+    cli::cli_text(grey("# {nrow(x)} Dr Frost task{?s}"))
     d <- cli::cli_div(theme = list(
       h1 = list("margin-bottom" = 1),
       h2 = list("margin-bottom" = 0)
     ))
     for(a in unique(x$topic)) {
-      cli::cli_h1(a)
+      if(a != "") {
+        cli::cli_h1(a)
+      }
       y <- x[x$topic == a, , drop = FALSE]
       for(b in unique(y$subtopic)) {
-        cli::cli_div(
-          cli::cli_h2(b),
-          theme = list(h2 = list("margin-bottom" = 0))
-        )
+        if(b != "") {
+          cli::cli_h2(b)
+        }
         z <- y[y$subtopic == b,]
         for(i in seq_len(nrow(z))) {
           row <- z[i,]
@@ -121,8 +166,11 @@ print.dr_frost_tasks <- function(x, ...) {
       }
     }
     cli::cli_end(d)
+    if(!is.na(excess_tasks)) {
+      cli::cli_text(grey("… with {excess_tasks} more task{?s}"))
+      cli::cli_text(grey("# ℹ Use `print(n = ...)` to see more tasks"))
+    }
   })
-  invisible(x)
 }
 
 get_tasks <- function(tasks) {

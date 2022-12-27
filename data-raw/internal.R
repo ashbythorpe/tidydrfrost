@@ -6,7 +6,10 @@ tasks_df <- tibble::tribble(
   "KS3 Number", "Arithmetic Operations", "multiplication", "Multiply numbers up to 3 digit by 3 digit.",
   "KS3 Number", "Arithmetic Operations", "pictoral_division", "Solve one step multiplication and division problems by using pictorial representations and arrays.",
   "KS3 Number", "Arithmetic Operations", "division", "Divide numbers.",
-  "KS3 Number", "Arithmetic Operations", "number_facts", " Using number facts to solve connected calculations."
+  "KS3 Number", "Arithmetic Operations", "number_facts", " Using number facts to solve connected calculations.",
+  
+  "Times tables", "", "fixed_time", "You have 30 seconds to answer as many questions as you can on all times/divide tables. Can you get on the leaderboard?",
+  "Times tables", "", "individual_practice", "Practise each times table/divide table separately, with points for accuracy and speed."
 ) %>%
   dplyr::mutate(string = paste(topic, subtopic, task_name, description))
 
@@ -21,3 +24,11 @@ result_init <- tibble::tibble(
 )
 
 usethis::use_data(tasks_df, result_init, internal = TRUE, overwrite = TRUE)
+
+error <- NA
+error <- rlang::try_fetch({
+  stop()
+}, error = function(c) {
+  error <- c
+})
+error

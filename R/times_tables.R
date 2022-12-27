@@ -1,52 +1,83 @@
-times_tables <- function(iter = 1, email = NULL, password = NULL, 
-                         keyring = NULL, end = TRUE) {
-  vctrs::vec_assert(iter, size = 1)
-  iter <- vctrs::vec_cast(iter, integer())
-  if(iter < 1) {
-    cli::cli_abort("{.arg iter} must be positive.")
+fixed_time <- function() {
+  points <- NA
+  error <- NA
+  
+  error <- rlang::try_fetch({
+    tdf$times_tables$fixed_time()
+    cli::cli_alert_success("Task completed.")
+  }, error = function(c) {
+    cli::cli_alert_danger("Task failed.")
+    c
+  })
+  
+  if(is.na(error)) {
+    error <- rlang::try_fetch({
+      points <- tdf$times_tables$times_tables_points()
+      cli::cli_alert_success("Points obtained: {.val {points}}.")
+      NA
+    }, error = function(c) {
+      cli::cli_alert_danger("Could not get points.")
+      c
+    })
   }
   
-  driver <- driver_setup(email, password, keyring)
-  
-  cli::cli_alert_info("Running times table task.")
-  
-  for(i in seq_len(iter)) {
-    tdf$times_tables$times_tables_iter(driver)
-  }
-  
-  cli::cli_alert_success("Times tables task finished.")
-  
-  if(end) {
-    tdf$driver_utils$end_session(driver)
-  }
-  
-  invisible(NULL)
+  list(
+    completed = !is.na(points),
+    points = points,
+    error = error
+  )
 }
 
-times_tables_games <- function(n = 1:29, email = NULL, password = NULL, 
-                               keyring = NULL, end = TRUE) {
-  n <- vctrs::vec_cast(n, integer())
-  if(length(n) == 0) {
-    cli::cli_abort("{.arg n} must not be an empty vector.")
+individual_practice <- function() {
+  total_points <- NA
+  error_list <- list()
+  completed <- 0
+  
+  for(i in 1:29) {
+    points <- NA
+    error <- NA
+    
+    error <- rlang::try_fetch({
+      tdf$times_tables$individual_practice(i)
+    }, error = function(c) {
+      c
+    })
+    
+    if(is.na(error)) {
+      error <- rlang::try_fetch({
+        points <- tdf$times_tables$times_tables_points()
+        completed <- completed + 1
+      }, error = function(c) {
+        cli::cli_alert_danger("Could not get points.")
+        c
+      })
+    }
+    
+    if(!is.na(error)) {
+      error_list <- c(error_list, list(error))
+    } else {
+      total_points <- add_points(total_points, points)
+    }
   }
-  n <- n[n >= 1L & n <= 29L]
-  if(length(n) == 0) {
-    cli::cli_abort("{.arg n} must be between 0 and 29.")
+  
+  if(completed == 0) {
+    cli::cli_alert_danger("Task failed.")
+  } else {
+    cli::cli_alert_success("Completed {completed}/29 times table games.")
+    cli::cli_alert_success("Points obtained: {.val {total_points}}.")
   }
   
-  driver <- driver_setup(email, password, keyring)
-  
-  cli::cli_alert_info("Running times table games.")
-  
-  for(i in n) {
-    tdf$times_tables$times_tables_game(driver, i)
+  list(
+    completed = completed != 0,
+    points = total_points,
+    error = error_list
+  )
+}
+
+add_points <- function(existing, new) {
+  if(is.na(existing)) {
+    new
+  } else {
+    existing + new
   }
-  
-  cli::cli_alert_success("Times tables games finished.")
-  
-  if(end) {
-    tdf$driver_utils$end_session(driver)
-  }
-  
-  invisible(NULL)
 }
