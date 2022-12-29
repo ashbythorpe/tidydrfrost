@@ -59,40 +59,11 @@ Currently the following tasks have been implemented:
 
 ``` r
 print(dr_frost_tasks(), n = Inf)
-#> # 10 Dr Frost tasks
-#> 
-#> ── KS2 Number ──────────────────────────────────────────────────────────────────
-#> 
-#> ── Arithmetic Operations ──
-#> • addition_subtraction
-#>   Add and subtract whole numbers.
-#> • multiplication
-#>   Multiply numbers up to 3 digit by 3 digit.
-#> • pictoral_division
-#>   Solve one step multiplication and division problems by using pictorial
-#>   representations and arrays.
-#> • division
-#>   Divide numbers.
-#> • number_facts
-#>   Using number facts to solve connected calculations.
-#> • missing_digits
-#>   Solve multiplication, addition and subtraction problems involving missing
-#>   digits.
-#> • bidmas
-#>   Understand the order in which operators in an expression are evaluated
-#>   according to BIDMAS.
-#> • estimate_calculations
-#>   Estimate the result of a calculation by first rounding each number.
-#> 
-#> ── Times tables ────────────────────────────────────────────────────────────────
-#> 
-#> • fixed_time
-#>   You have 30 seconds to answer as many questions as you can on all
-#>   times/divide tables. Can you get on the leaderboard?
-#> • individual_practice
-#>   Practise each times table/divide table separately, with points for accuracy
-#>   and speed.
 ```
+
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="man/figures/README-/tasks-dark.svg">
+<img src="man/figures/README-/tasks.svg" width="100%" /> </picture>
 
 ## Logging in
 
