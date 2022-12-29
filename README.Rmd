@@ -15,10 +15,7 @@ knitr::opts_chunk$set(
 asciicast::init_knitr_engine(
   startup = quote({
     library(tidydrfrost)
-<<<<<<< HEAD
     set.seed(42)
-=======
->>>>>>> 8f23b726a811c73725b655836ea5b36fbc39055d
   }),
   echo = TRUE,
   echo_input = FALSE
