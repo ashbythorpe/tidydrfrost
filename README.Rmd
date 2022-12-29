@@ -9,7 +9,16 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  asciicast_theme = if (Sys.getenv("IN_PKGDOWN") == "true") "pkgdown" else "readme"
+)
+asciicast::init_knitr_engine(
+  startup = quote({
+    library(tidydrfrost)
+    set.seed(42)
+  }),
+  echo = TRUE,
+  echo_input = FALSE
 )
 ```
 
@@ -59,7 +68,7 @@ perform_tasks(tasks)
 ```
 
 Currently the following tasks have been implemented:
-```{r}
+```{asciicast tasks}
 print(dr_frost_tasks(), n = Inf)
 ```
 

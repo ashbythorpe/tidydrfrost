@@ -41,7 +41,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck reticulate
+          extra-packages: any::rcmdcheck any::reticulate
           needs: check
       
       - uses: actions/setup-python@v4
