@@ -1,4 +1,4 @@
-from selene import browser, be, have
+from selene import browser, by, be, have
 from selene.api import s, ss
 import selenium
 from selenium.webdriver.common.by import By
@@ -100,3 +100,23 @@ while True:
 else:
   print("a")
 
+def parse_mathjax(elems):
+  question = ""
+  for el in elems:
+    tag_name = el.tag_name
+    if tag_name == "mrow":
+      question += parse_mathjax(el.elements(by.xpath("./*")))
+    elif tag_name == "msup":
+      components = el.elements(by.xpath("./*"))
+      question += components[0].text + "**" + components[1].text
+    else:
+      text = el.text
+      if text == "−":
+        question += "-"
+      elif text == "×":
+        question += "*"
+      elif text == "÷":
+        question += "/"
+      else:
+        question += text
+  return question

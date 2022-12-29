@@ -110,19 +110,24 @@ perform_task <- function(task) {
   error <- rlang::try_fetch({
     switch(
       task,
-      addition_subtraction = tdf$KS3_Number$Arithmetic_Operations$addition_subtraction(),
-      multiplication = tdf$KS3_Number$Arithmetic_Operations$multiplication(),
-      pictoral_division = tdf$KS3_Number$Arithmetic_Operations$pictoral_division(),
-      division = tdf$KS3_Number$Arithmetic_Operations$division()
+      addition_subtraction = tdf$KS2_Number$Arithmetic_Operations$addition_subtraction(),
+      multiplication = tdf$KS2_Number$Arithmetic_Operations$multiplication(),
+      pictoral_division = tdf$KS2_Number$Arithmetic_Operations$pictoral_division(),
+      division = tdf$KS2_Number$Arithmetic_Operations$division(),
+      number_facts = tdf$KS2_Number$Arithmetic_Operations$number_facts(),
+      missing_digits = tdf$KS2_Number$Arithmetic_Operations$missing_digits(),
+      bidmas = tdf$KS2_Number$Arithmetic_Operations$bidmas(),
+      estimate_calculations = tdf$KS2_Number$Arithmetic_Operations$estimate_calculations()
     )
     cli::cli_alert_success("Task completed.")
     NA
-  }, error = function(c) {
-    cli::cli_alert_danger("Task failed.")
-    c
-  })
+  }#, error = function(c) {
+  #  cli::cli_alert_danger("Task failed.")
+  #  c
+  #}
+  )
   
-  if(is.na(error)) {
+  if(all(is.na(error))) {
     error <- rlang::try_fetch({
       points <- tdf$driver_utils$get_points()
       cli::cli_alert_success("Points obtained: {.val {points}}.")

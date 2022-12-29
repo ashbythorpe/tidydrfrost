@@ -59,9 +59,9 @@ Currently the following tasks have been implemented:
 
 ``` r
 print(dr_frost_tasks(), n = Inf)
-#> # 7 Dr Frost tasks
+#> # 10 Dr Frost tasks
 #> 
-#> ── KS3 Number ──────────────────────────────────────────────────────────────────
+#> ── KS2 Number ──────────────────────────────────────────────────────────────────
 #> 
 #> ── Arithmetic Operations ──
 #> • addition_subtraction
@@ -75,6 +75,14 @@ print(dr_frost_tasks(), n = Inf)
 #>   Divide numbers.
 #> • number_facts
 #>   Using number facts to solve connected calculations.
+#> • missing_digits
+#>   Solve multiplication, addition and subtraction problems involving missing
+#>   digits.
+#> • bidmas
+#>   Understand the order in which operators in an expression are evaluated
+#>   according to BIDMAS.
+#> • estimate_calculations
+#>   Estimate the result of a calculation by first rounding each number.
 #> 
 #> ── Times tables ────────────────────────────────────────────────────────────────
 #> 

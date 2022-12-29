@@ -10,7 +10,7 @@ fixed_time <- function() {
     c
   })
   
-  if(is.na(error)) {
+  if(all(is.na(error))) {
     error <- rlang::try_fetch({
       points <- tdf$times_tables$times_tables_points()
       cli::cli_alert_success("Points obtained: {.val {points}}.")
@@ -43,7 +43,7 @@ individual_practice <- function() {
       c
     })
     
-    if(is.na(error)) {
+    if(all(is.na(error))) {
       error <- rlang::try_fetch({
         points <- tdf$times_tables$times_tables_points()
         completed <- completed + 1
@@ -53,7 +53,7 @@ individual_practice <- function() {
       })
     }
     
-    if(!is.na(error)) {
+    if(!all(is.na(error))) {
       error_list <- c(error_list, list(error))
     } else {
       total_points <- add_points(total_points, points)

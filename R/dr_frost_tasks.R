@@ -102,6 +102,10 @@ create_filter <- function(x) {
 #' @param n The maximum number of tasks to show. Excess tasks will be truncated.
 #'   Use `Inf` to show all tasks.
 #' 
+#' @details 
+#' This printing method is heavily inspired by the tibble printing method:
+#' [tibble::print.tbl_df].
+#' 
 #' @returns `x`, invisibly
 #' 
 #' @examples 

@@ -21,6 +21,10 @@ Use \code{Inf} to show all tasks.}
 The \code{dr_frost_tasks} object has an enhanced printing method, using topics and
 subtopics as headers.
 }
+\details{
+This printing method is heavily inspired by the tibble printing method:
+\link[tibble:formatting]{tibble::print.tbl_df}.
+}
 \examples{
 print(dr_frost_tasks())
 print(dr_frost_tasks(), n = 5)

@@ -10,7 +10,7 @@ def end_session():
   browser.close()
 
 def login(eml, pwd):
-  config.timeout = 10
+  config.timeout = 30
   
   get_with_retry(
     "https://www.drfrostmaths.com/login.php",
