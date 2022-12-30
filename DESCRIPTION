@@ -5,9 +5,8 @@ Authors@R:
     person("Ashby", "Thorpe", , "ashbythorpe@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3106-099X"))
 Description: Automates a set of tasks in Dr Frost Maths 
-    (https://www.drfrostmaths.com/). Provides a robust and secure login method
-    and a detailed Command Line Interface to make the completing tasks easy and
-    robust.
+    (<https://www.drfrostmaths.com>). Provides a secure login method and a 
+    detailed Command Line Interface to make completing tasks easy and robust.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

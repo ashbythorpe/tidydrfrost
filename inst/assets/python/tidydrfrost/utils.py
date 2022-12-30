@@ -3,6 +3,7 @@ from selene.api import s, ss
 import selenium
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.action_chains import ActionChains
 import time
 from time import sleep
 import tidydrfrost.robust_utils as robust
@@ -30,22 +31,34 @@ def set_value(elem, value):
   except:
     elem.set(value)
 
-def answer_question(answer, last_question = False, answer_input = None):
+def answer_question(answer, last_question = False, answer_input = None, mq = False):
   if answer_input == None:
-    answer_input = s(".answer-content").element("input")
-    
-  answer_input.set(answer)
+    if mq:
+      answer_input = s(".answer-content").element(".eqnsolutions-answerinput")
+    else:
+      answer_input = s(".answer-content").element("input")
+  
+  if mq:
+    mq_set(answer_input, answer)
+  else:
+    answer_input.set(answer)
   s("input[type='submit']").click()
-  final_checks(last_question)
+  final_checks(last_question, mq)
 
-def try_two_answers(answers, last_question = False, answer_input = None):
+def try_two_answers(answers, last_question = False, answer_input = None, mq = False):
   if answer_input == None:
-    answer_input = s(".answer-content").element("input")
+    if mq:
+      answer_input = s(".answer-content").element(".eqnsolutions-answerinput")
+    else:
+      answer_input = s(".answer-content").element("input")
   
   a1 = answers[0]
   a2 = answers[1]
   
-  answer_input.set(a1)
+  if mq:
+    mq_set(answer_input, a1)
+  else:
+    answer_input.set(a1)
   s("input[type='submit']").click()
   time_end = time.time() + 10
   while time.time() < time_end:
@@ -53,15 +66,18 @@ def try_two_answers(answers, last_question = False, answer_input = None):
       s(".close-modal").click()
       break
     if detect_response(last_question):
-      final_checks(last_question)
+      final_checks(last_question, mq)
       return True
-    sleep(0.5)
+    sleep(0.1)
   else:
     raise TimeoutError("Could not determine question response.")
   robust.close_modals()
-  answer_input.set(a2)
+  if mq:
+    mq_set(answer_input, a2)
+  else:
+    answer_input.set(a2)
   s("input[type='submit']").click()
-  final_checks(last_question)
+  final_checks(last_question, mq)
 
 def answer_is_incorrect():
   incorrect_messages = [
@@ -83,14 +99,17 @@ def detect_response(last_question):
   else:
     return s("#doquestion-response").is_displayed()
 
-def final_checks(last_question):
+def final_checks(last_question, mq):
   if not last_question:
     robust.close_modals()
     question_id = s(".question-form").get_attribute("id")
     s("#nextquestion-button").scroll_to().click()
     s(".question-form").should_not(have.attribute("id", question_id))
     s(".question-content").element("p").should(be.visible)
-    s(".answer-content").element("input").should(be.visible)
+    if mq:
+      s(".answer-content").element(".eqnsolutions-answerinput").should(be.visible)
+    else:
+      s(".answer-content").element("input").should(be.visible)
   else:
     s(".taskcomplete").should(be.visible)
 
@@ -106,6 +125,9 @@ def parse_mathjax(elems):
     tag_name = el.tag_name
     if tag_name == "mrow":
       question += parse_mathjax(el.elements(by.xpath("./*")))
+    elif tag_name == "mfrac":
+      components = el.elements(by.xpath("./*"))
+      question += "(" + components[0].text + ")/(" + components[1].text + ")"
     elif tag_name == "msup":
       components = el.elements(by.xpath("./*"))
       question += components[0].text + "**" + components[1].text
@@ -120,3 +142,22 @@ def parse_mathjax(elems):
       else:
         question += text
   return question
+
+def mq_set(elem, value):
+  value = str(value)
+  chain = ActionChains(browser.driver())
+  if "mq-root-block" not in elem.get_attribute("class").split(" "):
+    elem = elem.element(".mq-root-block")
+  elem.click()
+  for _ in elem.elements(by.xpath("./*"))[:-1]:
+    chain.key_down(Keys.BACKSPACE)
+  for a in value:
+    chain.key_down(a)
+  chain.perform()
+  try:
+    s("img[src='/homework/img/enter.png']").click(timeout = 5)
+  except:
+    pass
+  s("#virtual-keyboard").should_not(be.visible)
+  return elem
+

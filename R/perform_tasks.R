@@ -110,14 +110,18 @@ perform_task <- function(task) {
   error <- rlang::try_fetch({
     switch(
       task,
-      addition_subtraction = tdf$KS2_Number$Arithmetic_Operations$addition_subtraction(),
-      multiplication = tdf$KS2_Number$Arithmetic_Operations$multiplication(),
-      pictoral_division = tdf$KS2_Number$Arithmetic_Operations$pictoral_division(),
-      division = tdf$KS2_Number$Arithmetic_Operations$division(),
-      number_facts = tdf$KS2_Number$Arithmetic_Operations$number_facts(),
-      missing_digits = tdf$KS2_Number$Arithmetic_Operations$missing_digits(),
-      bidmas = tdf$KS2_Number$Arithmetic_Operations$bidmas(),
-      estimate_calculations = tdf$KS2_Number$Arithmetic_Operations$estimate_calculations()
+      continue_sequence = tdf$Algebra$Sequences$continue_sequence(),
+      later_terms = tdf$Algebra$Sequences$later_terms(),
+      simple_substitution = tdf$Algebra$Solving_Equations$simple_substitution(),
+      solve_one_step = tdf$Algebra$Solving_Equations$solve_one_step(),
+      addition_subtraction = tdf$Number$Arithmetic_Operations$addition_subtraction(),
+      multiplication = tdf$Number$Arithmetic_Operations$multiplication(),
+      pictoral_division = tdf$Number$Arithmetic_Operations$pictoral_division(),
+      division = tdf$Number$Arithmetic_Operations$division(),
+      number_facts = tdf$Number$Arithmetic_Operations$number_facts(),
+      missing_digits = tdf$Number$Arithmetic_Operations$missing_digits(),
+      bidmas = tdf$Number$Arithmetic_Operations$bidmas(),
+      estimate_calculations = tdf$Number$Arithmetic_Operations$estimate_calculations()
     )
     cli::cli_alert_success("Task completed.")
     NA

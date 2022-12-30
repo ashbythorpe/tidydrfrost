@@ -80,7 +80,7 @@ def division():
   i = 0
   
   while questions_answered < 35 and i < 100:
-    #try:
+    try:
       element = s(".question-content").elements("p")[1]
       question = element.text
       answer_boxes = s(".answer-content").elements("input")
@@ -119,9 +119,9 @@ def division():
         answer_boxes[1].set(n1 % n2)
         utils.answer_question(n2, questions_answered == 34, answer_boxes[2])
         questions_answered += 1
-    #except:
-    #  print("Error")
-      i += 1
+    except:
+      print("Error")
+    i += 1
 
 def number_facts():
   utils.start_task(
@@ -190,10 +190,11 @@ def missing_digits():
       if divide == 0:
         # Unanswerable question, answer can be between [0-4]
         utils.try_two_answers([0, 1], questions_answered == 34)
+        questions_answered += 1
       else:
         answer = total/divide
-      utils.answer_question(answer, questions_answered == 34)
-      questions_answered += 1
+        utils.answer_question(answer, questions_answered == 34)
+        questions_answered += 1
     except:
       print("Error")
     i += 1
@@ -241,7 +242,7 @@ def estimate_calculations():
   i = 0
   
   while questions_answered < 35 and i < 100:
-    #try:
+    try:
       if s(".question-content").elements("p")[1].elements("mfrac").size() == 0:
         question = s(".question-content").elements("p")[1].text
         n1, n2 = re.findall("[0-9.]+", question)
@@ -260,6 +261,6 @@ def estimate_calculations():
         answer = eval(final_num) / sigfig.round(float(denom), sigfigs = 1)
       utils.answer_question(answer, questions_answered == 34)
       questions_answered += 1
-    #except:
-    #  print("Error")
-      i += 1
+    except:
+      print("Error")
+    i += 1
