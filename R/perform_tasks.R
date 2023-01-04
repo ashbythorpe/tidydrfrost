@@ -54,6 +54,8 @@ perform_tasks <- function(tasks = dr_frost_tasks(), email = NULL,
   
   driver_setup(email, password, keyring)
   
+  setup_javascript(tasks)
+  
   cli::cli_alert_info("Beginning tasks.")
   
   results <- lapply(tasks, perform_task)
@@ -114,6 +116,11 @@ perform_task <- function(task) {
       later_terms = tdf$Algebra$Sequences$later_terms(),
       simple_substitution = tdf$Algebra$Solving_Equations$simple_substitution(),
       solve_one_step = tdf$Algebra$Solving_Equations$solve_one_step(),
+      mean = tdf$Data_Handling_and_Probability$Averages_and_Range$mean(),
+      pictograms = tdf$Data_Handling_and_Probability$Data_Representation$pictograms(),
+      bar_charts = tdf$Data_Handling_and_Probability$Data_Representation$bar_charts(),
+      bank_statements = tdf$Data_Handling_and_Probability$Data_Representation$bank_statements(),
+      pie_charts = tdf$Data_Handling_and_Probability$Data_Representation$pie_charts(),
       addition_subtraction = tdf$Number$Arithmetic_Operations$addition_subtraction(),
       multiplication = tdf$Number$Arithmetic_Operations$multiplication(),
       pictoral_division = tdf$Number$Arithmetic_Operations$pictoral_division(),
@@ -121,7 +128,13 @@ perform_task <- function(task) {
       number_facts = tdf$Number$Arithmetic_Operations$number_facts(),
       missing_digits = tdf$Number$Arithmetic_Operations$missing_digits(),
       bidmas = tdf$Number$Arithmetic_Operations$bidmas(),
-      estimate_calculations = tdf$Number$Arithmetic_Operations$estimate_calculations()
+      estimate_calculations = tdf$Number$Arithmetic_Operations$estimate_calculations(),
+      place_value = tdf$Number$Decimals$place_value(),
+      decimal_addition_subtraction = tdf$Number$Decimals$decimal_addition_subtraction(),
+      conversion = tdf$Number$Fraction_Decimal_and_Percentage_Correspondences$conversion(),
+      shape_fractions = tdf$Number$Fractions$shape_fractions(),
+      equivalent_fractions = tdf$Number$Fractions$equivalent_fractions(),
+      {cli::cli_abort("Task not found: {.val {task}}.")}
     )
     cli::cli_alert_success("Task completed.")
     NA
@@ -158,4 +171,34 @@ perform_task <- function(task) {
       error = NA
     )
   }
+}
+
+setup_javascript <- function(tasks) {
+  print(tasks)
+  table <- dr_frost_tasks(tasks)
+  topic <- format_names(table$topic)
+  subtopic <- format_names(table$subtopic)
+  files <- get_js_files(topic, subtopic)
+  lapply(files, source_js)
+  print(files)
+}
+
+format_names <- function(x) {
+  x <- gsub(" ", "_", x, fixed = TRUE)
+  x <- gsub(",", "", x, fixed = TRUE)
+  gsub("&", "and", x, fixed = TRUE)
+}
+
+get_js_files <- function(topic, subtopic) {
+  paths <- paste0("assets/js/", topic, "/", subtopic, ".js")
+  actual <- vapply(paths, system.file, character(1), package = "tidydrfrost")
+  c(actual[actual != ""], system.file("assets/js/utils.js", package = "tidydrfrost"))
+}
+
+source_js <- function(file) {
+  rlang::try_fetch({
+    tdf$driver_utils$source_js(file)
+  }, error = function(c) {
+    cli::cli_abort("Could not source JavaScript dependencies.", parent = c)
+  })
 }

@@ -35,11 +35,11 @@ def continue_sequence():
         for el in answer_boxes[0:-1]:
           el.set(answer)
           answer *= mult
-      utils.answer_question(answer, questions_answered == 34, answer_input = answer_boxes[-1])
+      utils.answer_question(answer, questions_answered, answer_input = answer_boxes[-1])
       questions_answered += 1
     except:
       print("Error")
-      i += 1
+    i += 1
 
 def later_terms():
   utils.start_task(
@@ -64,8 +64,8 @@ def later_terms():
         # Geometric sequence
         mult = rel_numbers[1]/rel_numbers[0]
         answer = rel_numbers[0] * mult ** (n - 1)
-      utils.answer_question(answer, questions_answered == 34)    
+      utils.answer_question(answer, questions_answered)    
       questions_answered += 1
     except:
       print("Error")
-      i += 1
+    i += 1

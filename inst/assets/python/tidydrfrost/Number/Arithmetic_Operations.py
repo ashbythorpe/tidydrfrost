@@ -22,7 +22,7 @@ def addition_subtraction():
       question = element.text
       question = question.replace("−", "-")
       answer = eval(question)
-      utils.answer_question(answer, questions_answered == 34)
+      utils.answer_question(answer, questions_answered)
       questions_answered += 1
     except:
       print("Error")
@@ -43,7 +43,7 @@ def multiplication():
       question = element.text
       question = question.replace("×", "*")
       answer = eval(question)
-      utils.answer_question(answer, questions_answered == 34)
+      utils.answer_question(answer, questions_answered)
       questions_answered += 1
     except:
       print("Error")
@@ -64,7 +64,7 @@ def pictoral_division():
       question = re.search("[0-9]+.[0-9]+", element.text).group(0)
       question = question.replace("÷", "/")
       answer = eval(question)
-      utils.answer_question(answer, questions_answered == 34)
+      utils.answer_question(answer, questions_answered)
       questions_answered += 1
     except:
       print("Error")
@@ -99,17 +99,17 @@ def division():
           else:
             answer = n2/n1
           answers = [math.floor(answer), math.ceil(answer)]
-          utils.try_two_answers(answers, questions_answered == 34)
+          utils.try_two_answers(answers, questions_answered)
           questions_answered += 1
           continue
-        utils.answer_question(answer, questions_answered == 34)
+        utils.answer_question(answer, questions_answered)
         questions_answered += 1
       elif answer_boxes.size() == 2:
         numbers = re.findall("[0-9]+", question)
         n1 = int(numbers[0])
         n2 = int(numbers[1])
         answer_boxes[0].set(n1 // n2)
-        utils.answer_question(n1 % n2, questions_answered == 34, answer_boxes[1])
+        utils.answer_question(n1 % n2, questions_answered, answer_boxes[1])
         questions_answered += 1
       else:
         numbers = re.findall("[0-9]+", question)
@@ -117,7 +117,7 @@ def division():
         n2 = int(numbers[1])
         answer_boxes[0].set(n1 // n2)
         answer_boxes[1].set(n1 % n2)
-        utils.answer_question(n2, questions_answered == 34, answer_boxes[2])
+        utils.answer_question(n2, questions_answered, answer_boxes[2])
         questions_answered += 1
     except:
       print("Error")
@@ -140,7 +140,7 @@ def number_facts():
       question = question.replace("×", "*")
       question = question.replace("÷", "/")
       answer = round(eval(question), 8) # For thirds
-      utils.answer_question(answer, questions_answered == 34)
+      utils.answer_question(answer, questions_answered)
       questions_answered += 1
     except:
       print("Error")
@@ -189,11 +189,11 @@ def missing_digits():
           divide += (10 ** (2-a))
       if divide == 0:
         # Unanswerable question, answer can be between [0-4]
-        utils.try_two_answers([0, 1], questions_answered == 34)
+        utils.try_two_answers([0, 1], questions_answered)
         questions_answered += 1
       else:
         answer = total/divide
-        utils.answer_question(answer, questions_answered == 34)
+        utils.answer_question(answer, questions_answered)
         questions_answered += 1
     except:
       print("Error")
@@ -226,7 +226,7 @@ def bidmas():
             .elements("math > mn, math > mo, math > msup, math > mrow")
         question = utils.parse_mathjax(elements)
         answer = eval(question)
-      utils.answer_question(answer, questions_answered == 34)
+      utils.answer_question(answer, questions_answered)
       questions_answered += 1
     except:
       print("Error")
@@ -259,7 +259,7 @@ def estimate_calculations():
           .replace(n2, str(sigfig.round(float(n2), sigfigs = 1)))\
           .replace("−", "-").replace("×", "*")
         answer = eval(final_num) / sigfig.round(float(denom), sigfigs = 1)
-      utils.answer_question(answer, questions_answered == 34)
+      utils.answer_question(answer, questions_answered)
       questions_answered += 1
     except:
       print("Error")

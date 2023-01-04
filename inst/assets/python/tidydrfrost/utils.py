@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+import sympy
 from time import sleep
 import tidydrfrost.robust_utils as robust
 
@@ -19,19 +20,7 @@ def start_task(url, n):
   Select(s("#task-numquestions").get_actual_webelement()).select_by_value('35')
   start.click()
 
-def get_text(elem):
-  try:
-    return elem.text
-  except:
-    return elem.text
-
-def set_value(elem, value):
-  try:
-    elem.set(value)
-  except:
-    elem.set(value)
-
-def answer_question(answer, last_question = False, answer_input = None, mq = False):
+def answer_question(answer, question_number = 1, answer_input = None, mq = False):
   if answer_input == None:
     if mq:
       answer_input = s(".answer-content").element(".eqnsolutions-answerinput")
@@ -43,9 +32,15 @@ def answer_question(answer, last_question = False, answer_input = None, mq = Fal
   else:
     answer_input.set(answer)
   s("input[type='submit']").click()
-  final_checks(last_question, mq)
+  final_checks(question_number)
 
-def try_two_answers(answers, last_question = False, answer_input = None, mq = False):
+def multiple_answers(answers, question_number = 1, mq = False):
+  answer_boxes = s(".answer-content").elements("input")
+  for ida, a in enumerate(answer_boxes[0:-1]):
+    a.set(answers[ida])
+  answer_question(answers[-1], question_number, answer_input = answer_boxes[-1])
+
+def try_two_answers(answers, question_number = 1, answer_input = None, mq = False):
   if answer_input == None:
     if mq:
       answer_input = s(".answer-content").element(".eqnsolutions-answerinput")
@@ -65,8 +60,8 @@ def try_two_answers(answers, last_question = False, answer_input = None, mq = Fa
     if answer_is_incorrect():
       s(".close-modal").click()
       break
-    if detect_response(last_question):
-      final_checks(last_question, mq)
+    if detect_response(question_number == 34):
+      final_checks(question_number)
       return True
     sleep(0.1)
   else:
@@ -77,7 +72,7 @@ def try_two_answers(answers, last_question = False, answer_input = None, mq = Fa
   else:
     answer_input.set(a2)
   s("input[type='submit']").click()
-  final_checks(last_question, mq)
+  final_checks(question_number)
 
 def answer_is_incorrect():
   incorrect_messages = [
@@ -99,17 +94,21 @@ def detect_response(last_question):
   else:
     return s("#doquestion-response").is_displayed()
 
-def final_checks(last_question, mq):
-  if not last_question:
+def final_checks(question_number):
+  if question_number != 34:
     robust.close_modals()
     question_id = s(".question-form").get_attribute("id")
-    s("#nextquestion-button").scroll_to().click()
-    s(".question-form").should_not(have.attribute("id", question_id))
-    s(".question-content").element("p").should(be.visible)
-    if mq:
-      s(".answer-content").element(".eqnsolutions-answerinput").should(be.visible)
-    else:
-      s(".answer-content").element("input").should(be.visible)
+    try:
+      s("#nextquestion-button").scroll_to().click()
+      s(".question-form").should_not(have.attribute("id", question_id))
+      s(".question-content").element("p").should(be.visible)
+      s(".question-form").element("input[type='submit']").should(be.visible)
+    except:
+      # Can not work the first time
+      s("#nextquestion-button").scroll_to().click()
+      s(".question-form").should_not(have.attribute("id", question_id))
+      s(".question-content").element("p").should(be.visible)
+      s(".question-form").element("input[type='submit']").should(be.visible)
   else:
     s(".taskcomplete").should(be.visible)
 
@@ -161,3 +160,19 @@ def mq_set(elem, value):
   s("#virtual-keyboard").should_not(be.visible)
   return elem
 
+def get_fraction(elem):
+  n1 = elem.elements("mn")[0].text
+  n2 = elem.elements("mn")[1].text
+  fraction = n1 + "/" + n2
+  return sympy.core.sympify(fraction, rational = True)
+
+def execute_js(function, *args, **kwargs):
+  unnamed = ",".join(map(str, args))
+  named = ",".join(map(lambda x, y: f"{str(x)} = {str(y)}", kwargs, kwargs.values()))
+  if unnamed == "" or named == "":
+    final = "".join([unnamed, named])
+  else:
+    final = ",".join([unnamed, named])
+  driver = browser.driver()
+  setup = f"var {function} = eval('(' + window.localStorage.getItem('{function}') + ')');"
+  return driver.execute_script(setup + "return " + function + "(" + final + ");")

@@ -10,7 +10,7 @@ def end_session():
   browser.close()
 
 def login(eml, pwd):
-  config.timeout = 30
+  config.timeout = 10
   
   get_with_retry(
     "https://www.drfrostmaths.com/login.php",
@@ -33,3 +33,8 @@ def get_points():
   points_text = s(".taskcomplete").elements("p")[0]
   points = int(re.search("[0-9]+", points_text.text).group(0))
   return points
+
+def source_js(file):
+  driver = browser.driver()
+  driver.execute_script(open(file).read())
+  

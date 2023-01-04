@@ -21,7 +21,7 @@ def simple_substitution():
   i = 0
   
   while questions_answered < 35 and i < 100:
-    #try:
+    try:
       els = s(".question-content").element("p").elements("math")
       question = els[0].text.replace("−", "-").replace("×", "*").replace("÷", "/")
       if els[0].elements("msup").size() == 0 and els[0].elements("mfrac").size() == 0:
@@ -34,11 +34,11 @@ def simple_substitution():
       value = re.search("[0-9]+", text).group(0)
       question = question.replace(name, value)
       answer = eval(question)
-      utils.answer_question(answer, questions_answered == 34)
+      utils.answer_question(answer, questions_answered)
       questions_answered += 1
-    #except:
-      #print("Error")
-      i += 1
+    except:
+      print("Error")
+    i += 1
 
 def solve_one_step():
   utils.start_task(
@@ -62,8 +62,8 @@ def solve_one_step():
       equation = lhs + "-(" + rhs + ")"
       sp = sympy.parsing.sympy_parser.parse_expr(equation, transformations = "all")
       answer = sympy.solve(sp)[0]
-      utils.answer_question(answer, questions_answered == 34, mq = True)
+      utils.answer_question(answer, questions_answered, mq = True)
       questions_answered += 1
     #except:
-      #print("Error")
+    #  print("Error")
       i += 1
