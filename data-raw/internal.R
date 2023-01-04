@@ -24,6 +24,8 @@ tasks_df <- tibble::tribble(
   "Number", "Fraction, Decimal & Percentage Correspondences", "conversion", "Convert between non-recurring decimals, fractions and percentages.",
   "Number", "Fractions", "shape_fractions", "Find what fraction of a shape is shaded.",
   "Number", "Fractions", "equivalent_fractions", "Understand equivalent fractions.",
+  "Number", "Fractions", "fraction_integer_division", "Divide fractions by integers.",
+  "Number", "Fractions", "order_fractions", "Order fractions, possibly with decimals.",
   
   "Times tables", "", "fixed_time", "You have 30 seconds to answer as many questions as you can on all times/divide tables. Can you get on the leaderboard?",
   "Times tables", "", "individual_practice", "Practise each times table/divide table separately, with points for accuracy and speed."

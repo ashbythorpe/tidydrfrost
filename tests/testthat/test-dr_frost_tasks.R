@@ -9,7 +9,7 @@ test_that("dr_frost_tasks() works", {
     nrow(dr_frost_tasks(exclude = "addition_subtraction")), 
     nrow(dr_frost_tasks()) - 1
   )
-  expect_length(unique(dr_frost_tasks(include = "KS2 Number")$topic), 1)
+  expect_length(unique(dr_frost_tasks(include = "Number")$topic), 1)
 })
 
 cli::test_that_cli("print method works", {

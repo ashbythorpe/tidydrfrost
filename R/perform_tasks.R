@@ -134,6 +134,8 @@ perform_task <- function(task) {
       conversion = tdf$Number$Fraction_Decimal_and_Percentage_Correspondences$conversion(),
       shape_fractions = tdf$Number$Fractions$shape_fractions(),
       equivalent_fractions = tdf$Number$Fractions$equivalent_fractions(),
+      fraction_integer_division = tdf$Number$Fractions$fraction_integer_division(),
+      order_fractions = tdf$Number$Fractions$order_fractions(),
       {cli::cli_abort("Task not found: {.val {task}}.")}
     )
     cli::cli_alert_success("Task completed.")

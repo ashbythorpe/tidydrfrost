@@ -120,7 +120,9 @@ print.dr_frost_tasks <- function(x, ..., n = 10) {
   }
   grey <- cli::make_ansi_style("grey60", grey = TRUE)
   
-  if(nrow(x) == 0L) {
+  data <- x
+  
+  if(nrow(data) == 0L) {
     cli::cli_text(grey("# 0 Dr Frost tasks"))
     return(invisible(x))
   } else if(n == 0L || (n < 0L && -n >= nrow(x))) {
@@ -130,15 +132,15 @@ print.dr_frost_tasks <- function(x, ..., n = 10) {
     return(invisible(x))
   } else if(n < 0L) {
     excess_tasks <- -n
-    x <- x[-seq_len(-n),]
-  } else if(nrow(x) > n) {
+    data <- data[-seq_len(-n),]
+  } else if(nrow(data) > n) {
     excess_tasks <- nrow(x) - n
-    x <- x[seq_len(n),]
+    data <- data[seq_len(n),]
   } else {
     excess_tasks <- NA
   }
   
-  print_dr_frost_tasks(x, excess_tasks, grey)
+  print_dr_frost_tasks(data, excess_tasks, grey)
   
   invisible(x)
 }

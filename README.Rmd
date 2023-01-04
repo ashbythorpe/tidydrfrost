@@ -68,7 +68,7 @@ perform_tasks(tasks)
 ```
 
 Currently the following tasks have been implemented:
-```{asciicast tasks}
+```{asciicast tasks, cache = FALSE}
 print(dr_frost_tasks(), n = Inf)
 ```
 

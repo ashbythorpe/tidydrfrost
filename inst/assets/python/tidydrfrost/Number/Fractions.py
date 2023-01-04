@@ -104,28 +104,37 @@ def order_fractions():
   )
   
   questions_answered = 0
+  i = 0
   
-  if s(".question-content").elements("mi").size() > 0:
-    els = s(".question-content").elements("p")[1].elements("mfrac")
-    fractions = list(map(utils.get_fraction, els))
-    buttons = s(".answer-content").elements("input[type='radio']")
-    labels = s(".answer-content").elements("label")
-    labels_text = list(map(lambda x: x.text, labels))
-    if fractions[0] == fractions[1]:
-      answer = ["="]
-    elif fractions[0] > fractions[1]:
-      answer = [">", "≠"]
-    else:
-      answer = ["<", "≠"]
-    index = list(map(lambda x: x in answer, labels_text)).index(True)
-    buttons[index].click()
-    s("input[type='submit']").click()
-    utils.final_checks(questions_answered)
-  else:
-    elements = s(".answer-content").elements("math")
-    numbers = list(map(parse_number, elements))
-    rank = sorted(range(len(numbers)), key=numbers.__getitem__)
-    rank
+  while questions_answered < 35 and i < 100:
+    #try:
+      if s(".question-content").elements("mi").size() > 0:
+        els = s(".question-content").elements("p")[1].elements("mfrac")
+        fractions = list(map(utils.get_fraction, els))
+        buttons = s(".answer-content").elements("input[type='radio']")
+        labels = s(".answer-content").elements("label")
+        labels_text = list(map(lambda x: x.text, labels))
+        if fractions[0] == fractions[1]:
+          answer = ["="]
+        elif fractions[0] > fractions[1]:
+          answer = [">", "≠"]
+        else:
+          answer = ["<", "≠"]
+        index = list(map(lambda x: x in answer, labels_text)).index(True)
+        buttons[index].click()
+        s("input[type='submit']").click()
+        utils.final_checks(questions_answered)
+      else:
+        elements = s(".answer-content").elements("math")
+        numbers = list(map(parse_number, elements))
+        rank = sorted(range(len(numbers)), key=numbers.__getitem__)
+        utils.execute_js("sort_by_rank", rank)
+        s("input[type='submit']").click()
+        utils.final_checks(questions_answered)
+      questions_answered += 1
+    #except:
+    #  print("Error")
+      i += 1
     
 
 def parse_number(elem):
@@ -141,3 +150,4 @@ def parse_number(elem):
       return sympy.core.sympify(fraction, rational = True)
     else:
       return float(text)
+
