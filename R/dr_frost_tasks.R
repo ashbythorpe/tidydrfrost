@@ -125,8 +125,8 @@ print.dr_frost_tasks <- function(x, ..., n = 10) {
     return(invisible(x))
   } else if(n == 0L || (n < 0L && -n >= nrow(x))) {
     cli::cli_text(grey("# {nrow(x)} Dr Frost task{?s}"))
-    cli::cli_text(grey("… with {nrow(x)} more task{?s}"))
-    cli::cli_text(grey("# ℹ Use `print(n = ...)` to see more tasks"))
+    cli::cli_text(grey(paste(cli::symbol$ellipsis, "with {nrow(x)} more task{?s}")))
+    cli::cli_text(grey(paste("#", cli::symbol$info, "Use `print(n = ...)` to see more tasks")))
     return(invisible(x))
   } else if(n < 0L) {
     excess_tasks <- -n
@@ -171,8 +171,8 @@ print_dr_frost_tasks <- function(x, excess_tasks, grey) {
     }
     cli::cli_end(d)
     if(!is.na(excess_tasks)) {
-      cli::cli_text(grey(paste("#", cli::symbol$ellipsis, "with {excess_tasks} more task{?s}")))
-      cli::cli_text(grey(paste("#", cli::symbol$info,"Use `print(n = ...)` to see more tasks")))    }
+      cli::cli_text(grey(paste(cli::symbol$ellipsis, "with {excess_tasks} more task{?s}")))
+      cli::cli_text(grey(paste("#", cli::symbol$info, "Use `print(n = ...)` to see more tasks")))    }
   })
 }
 
