@@ -15,4 +15,5 @@ test_that("dr_frost_tasks() works", {
 cli::test_that_cli("print method works", {
   expect_snapshot(expect_invisible(print(dr_frost_tasks())))
   expect_snapshot(expect_equal(print(dr_frost_tasks()), dr_frost_tasks()))
+  expect_snapshot(print(dr_frost_tasks(), n = Inf))
 })

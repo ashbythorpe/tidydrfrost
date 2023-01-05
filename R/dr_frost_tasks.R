@@ -8,8 +8,6 @@
 #'   will be included.
 #' @param exclude A character vector of tasks to exclude. If `NULL`, no tasks
 #'   will be excluded.
-#' @param x A `dr_frost_tasks` object.
-#' @param ... Not used.
 #'
 #' @details 
 #' If the `include` argument matches a topic, subtopic or task name of any task,
@@ -104,7 +102,7 @@ create_filter <- function(x) {
 #' 
 #' @details 
 #' This printing method is heavily inspired by the tibble printing method:
-#' [tibble::print.tbl_df].
+#' [tibble::print.tbl_df()].
 #' 
 #' @returns `x`, invisibly
 #' 
@@ -173,9 +171,8 @@ print_dr_frost_tasks <- function(x, excess_tasks, grey) {
     }
     cli::cli_end(d)
     if(!is.na(excess_tasks)) {
-      cli::cli_text(grey("… with {excess_tasks} more task{?s}"))
-      cli::cli_text(grey("# ℹ Use `print(n = ...)` to see more tasks"))
-    }
+      cli::cli_text(grey(paste("#", cli::symbol$ellipsis, "with {excess_tasks} more task{?s}")))
+      cli::cli_text(grey(paste("#", cli::symbol$info,"Use `print(n = ...)` to see more tasks")))    }
   })
 }
 

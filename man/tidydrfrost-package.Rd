@@ -6,7 +6,7 @@
 \alias{tidydrfrost-package}
 \title{tidydrfrost: Automated Tasks and Point Farmer for Dr Frost Maths}
 \description{
-Automates a set of tasks in Dr Frost Maths (https://www.drfrostmaths.com/). Provides a robust and secure login method and a detailed Command Line Interface to make the completing tasks easy and robust.
+Automates a set of tasks in Dr Frost Maths (\url{https://www.drfrostmaths.com}). Provides a secure login method and a detailed Command Line Interface to make completing tasks easy and robust.
 }
 \seealso{
 Useful links:

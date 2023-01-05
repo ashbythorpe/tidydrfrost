@@ -12,10 +12,6 @@ will be included.}
 
 \item{exclude}{A character vector of tasks to exclude. If \code{NULL}, no tasks
 will be excluded.}
-
-\item{x}{A \code{dr_frost_tasks} object.}
-
-\item{...}{Not used.}
 }
 \value{
 A data frame with additional class 'dr_frost_tasks', where each row

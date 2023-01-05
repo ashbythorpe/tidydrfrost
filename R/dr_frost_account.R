@@ -1,9 +1,9 @@
 #' Store your account details securely
 #' 
 #' Securely store the email and password to your Dr Frost Maths account so that
-#' it can be used between sessions. The 
-#' \link[keyring]{keyring::`keyring-package`} package is used as a backend,
-#' meaning that credentials are stored securely and permanently.
+#' it can be used between sessions. The [keyring][keyring::keyring] 
+#' package is used as a backend, meaning that credentials are stored securely 
+#' and permanently.
 #' 
 #' @param email The email for your Dr Frost Account. Multiple accounts with
 #'   different emails can be stored.

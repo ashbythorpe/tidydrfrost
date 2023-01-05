@@ -23,7 +23,7 @@ subtopics as headers.
 }
 \details{
 This printing method is heavily inspired by the tibble printing method:
-\link[tibble:formatting]{tibble::print.tbl_df}.
+\code{\link[tibble:formatting]{tibble::print.tbl_df()}}.
 }
 \examples{
 print(dr_frost_tasks())

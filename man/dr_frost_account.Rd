@@ -19,9 +19,9 @@ Nothing. This function is called for its side effects.
 }
 \description{
 Securely store the email and password to your Dr Frost Maths account so that
-it can be used between sessions. The
-\link[keyring]{keyring::\code{keyring-package}} package is used as a backend,
-meaning that credentials are stored securely and permanently.
+it can be used between sessions. The \link[keyring:keyring-package]{keyring}
+package is used as a backend, meaning that credentials are stored securely
+and permanently.
 }
 \details{
 Calling this function should open a prompt, allowing you to enter your
