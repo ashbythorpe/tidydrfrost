@@ -3,6 +3,8 @@ from selene.api import s, ss
 from time import sleep
 import re
 from tidydrfrost.robust_utils import get_with_retry
+import tidydrfrost.js_utils as js
+from os import walk
 
 def end_session():
   sleep(2)
@@ -10,18 +12,19 @@ def end_session():
   browser.close()
 
 def login(eml, pwd):
+  config.base_url = "https://www.drfrostmaths.com/"
   config.timeout = 10
   
   get_with_retry(
-    "https://www.drfrostmaths.com/login.php",
+    "login.php",
     by.name("login-email")
   )
   
-  s(by.name("login-email")).set(eml)
+  js.input_set(s(by.name("login-email")), eml)
   
-  s(by.name("login-password")).set(pwd)
+  js.input_set(s(by.name("login-password")), pwd)
   
-  s("#login-submit-button").click()
+  js.click(s("#login-submit-button"))
   
   modals = ss(".modal")
   if modals.size() > 0:
@@ -37,4 +40,11 @@ def get_points():
 def source_js(file):
   driver = browser.driver()
   driver.execute_script(open(file).read())
+
+def source_all_js(path):
+  files = []
+  for (dirpath, dirnames, filenames) in walk(path):
+    files.extend(map(lambda file: dirpath + "/" + file, filenames))
+  js_files = filter(lambda x: re.search(".js$", x) != None, files)
+  list(map(source_js, js_files))
   

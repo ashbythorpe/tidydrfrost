@@ -3,7 +3,7 @@
 S3method(print,dr_frost_tasks)
 export(dr_frost_account)
 export(dr_frost_tasks)
-export(install_selene)
+export(install_tdf_dependencies)
 export(perform_tasks)
 export(set_default_account)
 importFrom(rlang,"!!!")

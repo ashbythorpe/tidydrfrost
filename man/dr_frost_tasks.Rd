@@ -46,9 +46,9 @@ dr_frost_tasks(include = "addition_subtraction")
 
 dr_frost_tasks(include = "Arithmetic Operations")
 
-dr_frost_tasks(include = "KS3 Number")
+dr_frost_tasks(include = "Number")
 
-dr_frost_tasks(include = "KS3", exclude = "Arithmetic")
+dr_frost_tasks(include = "Number", exclude = "Arithmetic")
 
 dr_frost_tasks(exclude = "addition")
 
@@ -56,5 +56,8 @@ tibble::as_tibble(dr_frost_tasks())
 
 }
 \seealso{
-\code{\link[=perform_tasks]{perform_tasks()}}
+\itemize{
+\item \code{\link[=print.dr_frost_tasks]{print.dr_frost_tasks()}} for the printing method for these tasks.
+\item \code{\link[=perform_tasks]{perform_tasks()}} for the usage of these tasks.
+}
 }
