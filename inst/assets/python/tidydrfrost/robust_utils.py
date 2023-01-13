@@ -2,6 +2,7 @@ from selene import browser, be
 from selene.api import s, ss
 import time
 from time import sleep
+import tidydrfrost.js_utils as js
 
 def get_with_retry(url, selector):
   current_retry = 0
@@ -20,4 +21,4 @@ def close_modals():
     if s(".modal").elements(".taskcomplete").size() > 0:
       break
     else:
-      s(".close-modal").click()
+      js.click(s(".close-modal"))

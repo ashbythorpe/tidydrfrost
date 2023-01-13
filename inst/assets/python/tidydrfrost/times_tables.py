@@ -3,6 +3,7 @@ from selene.api import s, ss
 from time import sleep
 import tidydrfrost.utils as utils
 import tidydrfrost.robust_utils as robust
+import tidydrfrost.js_utils as js
 
 def fixed_time():
   robust.get_with_retry(
@@ -10,7 +11,7 @@ def fixed_time():
     "#question"
   )
   
-  s("#question").element("a").click()
+  js.click(s("#question").element("a"))
   question_el = s("#question")
   answer_box = s("#calculator-display")
   
@@ -20,15 +21,16 @@ def fixed_time():
       question = question.replace("×", "*")
       question = question.replace("÷", "/")
       answer = round(eval(question))
-      answer_box.set(answer)
+      js.input_set(answer_box, answer)
     except:
-      print("Error")
+      pass
 
 def individual_practice(n):
   robust.get_with_retry(
     "https://www.drfrostmaths.com/timestables-game.php?id=" + str(n),
     "#question"
   )
+  
   s("#question").element("a").click()
   answer_box = s("#calculator-display")
   
@@ -56,9 +58,9 @@ def individual_practice(n):
         question = question.replace("×", "*")
         question = question.replace("÷", "/")
         answer = round(eval(question))
-      answer_box.set(answer)
+      js.input_set(answer_box, answer)
     except:
-      print("Error")
+      pass
 
 def times_tables_points():
   return int(s(".dfm-pointsbar-textblack").text)

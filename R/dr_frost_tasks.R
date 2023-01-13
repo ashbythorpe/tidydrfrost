@@ -30,7 +30,9 @@
 #'   \item{description}{A brief description of the task.}
 #' }
 #' 
-#' @seealso [perform_tasks()]
+#' @seealso 
+#' * [print.dr_frost_tasks()] for the printing method for these tasks.
+#' * [perform_tasks()] for the usage of these tasks.
 #' 
 #' @examples 
 #' dr_frost_tasks()
@@ -39,9 +41,9 @@
 #' 
 #' dr_frost_tasks(include = "Arithmetic Operations")
 #' 
-#' dr_frost_tasks(include = "KS3 Number")
+#' dr_frost_tasks(include = "Number")
 #' 
-#' dr_frost_tasks(include = "KS3", exclude = "Arithmetic")
+#' dr_frost_tasks(include = "Number", exclude = "Arithmetic")
 #' 
 #' dr_frost_tasks(exclude = "addition")
 #' 
@@ -86,13 +88,13 @@ create_filter <- function(x) {
   } else if(x %in% tasks_df$task_name) {
     tasks_df$task_name == x
   } else {
-    grepl(x, tasks_df$string)
+    grepl(tolower(x), tolower(tasks_df$string))
   }
 }
 
 #' Printing Dr Frost tasks
 #' 
-#' The `dr_frost_tasks` object has an enhanced printing method, using topics and
+#' The [dr_frost_tasks()] object has an enhanced printing method, using topics and
 #' subtopics as headers.
 #' 
 #' @param x A `dr_frost_tasks` object.
@@ -103,6 +105,8 @@ create_filter <- function(x) {
 #' @details 
 #' This printing method is heavily inspired by the tibble printing method:
 #' [tibble::print.tbl_df()].
+#' 
+#' @seealso [dr_frost_tasks()]
 #' 
 #' @returns `x`, invisibly
 #' 
@@ -116,6 +120,7 @@ print.dr_frost_tasks <- function(x, ..., n = 10) {
   if(!is.infinite(n)) {
     n <- vctrs::vec_cast(n, integer())
   }
+  
   grey <- cli::make_ansi_style("grey60", grey = TRUE)
   
   data <- x
@@ -138,14 +143,14 @@ print.dr_frost_tasks <- function(x, ..., n = 10) {
     excess_tasks <- NA
   }
   
-  print_dr_frost_tasks(data, excess_tasks, grey)
+  print_dr_frost_tasks(data, excess_tasks, grey, nrow(x))
   
   invisible(x)
 }
 
-print_dr_frost_tasks <- function(x, excess_tasks, grey) {
+print_dr_frost_tasks <- function(x, excess_tasks, grey, n) {
   cli::cli({
-    cli::cli_text(grey("# {nrow(x)} Dr Frost task{?s}"))
+    cli::cli_text(grey("# {n} Dr Frost task{?s}"))
     d <- cli::cli_div(theme = list(
       h1 = list("margin-bottom" = 1),
       h2 = list("margin-bottom" = 0)
@@ -160,19 +165,18 @@ print_dr_frost_tasks <- function(x, excess_tasks, grey) {
           cli::cli_h2(b)
         }
         z <- y[y$subtopic == b,]
-        for(i in seq_len(nrow(z))) {
-          row <- z[i,]
-          cli::cli_bullets(c(
-            "*" = row$task_name,
-            " " = row$description
-          ))
-        }
+        task_name = z$task_name
+        names(task_name) <- rep("*", length(task_name))
+        description <- z$description
+        names(description) <- rep(" ", length(description))
+        cli::cli_bullets_raw(vctrs::vec_interleave(task_name, description))
       }
     }
     cli::cli_end(d)
     if(!is.na(excess_tasks)) {
       cli::cli_text(grey(paste(cli::symbol$ellipsis, "with {excess_tasks} more task{?s}")))
-      cli::cli_text(grey(paste("#", cli::symbol$info, "Use `print(n = ...)` to see more tasks")))    }
+      cli::cli_text(grey(paste("#", cli::symbol$info, "Use `print(n = ...)` to see more tasks")))
+    }
   })
 }
 

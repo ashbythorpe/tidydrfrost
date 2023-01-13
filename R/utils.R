@@ -48,15 +48,6 @@ get_account <- function(email, password, keyring) {
 driver_setup <- function(email, password, keyring) {
   account <- get_account(email, password, keyring)
   
-  # cli::cli_alert_info("Creating web session.")
-  # 
-  # driver <- rlang::try_fetch(
-  #   tdf$driver_utils$create_driver(),
-  #   error = function(c) {
-  #     cli::cli_abort("Could not create web session.", parent = c)
-  #   }
-  # )
-  
   cli::cli_alert_info("Logging in to Dr Frost Maths.")
   
   logged_in <- rlang::try_fetch(

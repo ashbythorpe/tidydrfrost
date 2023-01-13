@@ -112,30 +112,34 @@ perform_task <- function(task) {
   error <- rlang::try_fetch({
     switch(
       task,
-      continue_sequence = tdf$Algebra$Sequences$continue_sequence(),
-      later_terms = tdf$Algebra$Sequences$later_terms(),
-      simple_substitution = tdf$Algebra$Solving_Equations$simple_substitution(),
-      solve_one_step = tdf$Algebra$Solving_Equations$solve_one_step(),
-      mean = tdf$Data_Handling_and_Probability$Averages_and_Range$mean(),
-      pictograms = tdf$Data_Handling_and_Probability$Data_Representation$pictograms(),
-      bar_charts = tdf$Data_Handling_and_Probability$Data_Representation$bar_charts(),
-      bank_statements = tdf$Data_Handling_and_Probability$Data_Representation$bank_statements(),
-      pie_charts = tdf$Data_Handling_and_Probability$Data_Representation$pie_charts(),
-      addition_subtraction = tdf$Number$Arithmetic_Operations$addition_subtraction(),
-      multiplication = tdf$Number$Arithmetic_Operations$multiplication(),
-      pictoral_division = tdf$Number$Arithmetic_Operations$pictoral_division(),
-      division = tdf$Number$Arithmetic_Operations$division(),
-      number_facts = tdf$Number$Arithmetic_Operations$number_facts(),
-      missing_digits = tdf$Number$Arithmetic_Operations$missing_digits(),
-      bidmas = tdf$Number$Arithmetic_Operations$bidmas(),
-      estimate_calculations = tdf$Number$Arithmetic_Operations$estimate_calculations(),
-      place_value = tdf$Number$Decimals$place_value(),
-      decimal_addition_subtraction = tdf$Number$Decimals$decimal_addition_subtraction(),
-      conversion = tdf$Number$Fraction_Decimal_and_Percentage_Correspondences$conversion(),
-      shape_fractions = tdf$Number$Fractions$shape_fractions(),
-      equivalent_fractions = tdf$Number$Fractions$equivalent_fractions(),
-      fraction_integer_division = tdf$Number$Fractions$fraction_integer_division(),
-      order_fractions = tdf$Number$Fractions$order_fractions(),
+      continue_sequence = tdf$algebra$sequences$continue_sequence(),
+      later_terms = tdf$algebra$sequences$later_terms(),
+      simple_substitution = tdf$algebra$solving_equations$simple_substitution(),
+      solve_one_step = tdf$algebra$solving_equations$solve_one_step(),
+      mean = tdf$data_handling_and_probability$averages_and_range$mean(),
+      pictograms = tdf$data_handling_and_probability$data_representation$pictograms(),
+      bar_charts = tdf$data_handling_and_probability$data_representation$bar_charts(),
+      bank_statements = tdf$data_handling_and_probability$data_representation$bank_statements(),
+      pie_charts = tdf$data_handling_and_probability$data_representation$pie_charts(),
+      addition_subtraction = tdf$number$arithmetic_operations$addition_subtraction(),
+      multiplication = tdf$number$arithmetic_operations$multiplication(),
+      pictoral_division = tdf$number$arithmetic_operations$pictoral_division(),
+      division = tdf$number$arithmetic_operations$division(),
+      number_facts = tdf$number$arithmetic_operations$number_facts(),
+      missing_digits = tdf$number$arithmetic_operations$missing_digits(),
+      bidmas = tdf$number$arithmetic_operations$bidmas(),
+      estimate_calculations = tdf$number$arithmetic_operations$estimate_calculations(),
+      place_value = tdf$number$decimals$place_value(),
+      decimal_addition_subtraction = tdf$number$decimals$decimal_addition_subtraction(),
+      conversion = tdf$number$fraction_decimal_and_percentage_correspondences$conversion(),
+      shape_fractions = tdf$number$fractions$shape_fractions(),
+      equivalent_fractions = tdf$number$fractions$equivalent_fractions(),
+      fraction_integer_division = tdf$number$fractions$fraction_integer_division(),
+      order_fractions = tdf$number$fractions$order_fractions(),
+      mixed_addition_subtraction = tdf$number$fractions$mixed_addition_subtraction(),
+      fraction_amount = tdf$number$fractions$fraction_amount(),
+      amount_before_fraction = tdf$number$fractions$amount_before_fraction(),
+      order_negative_numbers = tdf$number$introduction_to_negative_numbers$order_negative_numbers(),
       {cli::cli_abort("Task not found: {.val {task}}.")}
     )
     cli::cli_alert_success("Task completed.")
@@ -173,34 +177,4 @@ perform_task <- function(task) {
       error = NA
     )
   }
-}
-
-setup_javascript <- function(tasks) {
-  print(tasks)
-  table <- dr_frost_tasks(tasks)
-  topic <- format_names(table$topic)
-  subtopic <- format_names(table$subtopic)
-  files <- get_js_files(topic, subtopic)
-  lapply(files, source_js)
-  print(files)
-}
-
-format_names <- function(x) {
-  x <- gsub(" ", "_", x, fixed = TRUE)
-  x <- gsub(",", "", x, fixed = TRUE)
-  gsub("&", "and", x, fixed = TRUE)
-}
-
-get_js_files <- function(topic, subtopic) {
-  paths <- paste0("assets/js/", topic, "/", subtopic, ".js")
-  actual <- vapply(paths, system.file, character(1), package = "tidydrfrost")
-  c(actual[actual != ""], system.file("assets/js/utils.js", package = "tidydrfrost"))
-}
-
-source_js <- function(file) {
-  rlang::try_fetch({
-    tdf$driver_utils$source_js(file)
-  }, error = function(c) {
-    cli::cli_abort("Could not source JavaScript dependencies.", parent = c)
-  })
 }

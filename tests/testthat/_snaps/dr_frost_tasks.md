@@ -3,7 +3,7 @@
     Code
       expect_invisible(print(dr_frost_tasks()))
     Message <cliMessage>
-      # 10 Dr Frost tasks
+      # 30 Dr Frost tasks
       
       -- Algebra ---------------------------------------------------------------------
       
@@ -42,7 +42,7 @@
       -- Arithmetic Operations --
       * addition_subtraction
         Add and subtract whole numbers.
-      ... with 16 more tasks
+      ... with 20 more tasks
       # i Use `print(n = ...)` to see more tasks
 
 ---
@@ -50,7 +50,7 @@
     Code
       expect_equal(print(dr_frost_tasks()), dr_frost_tasks())
     Message <cliMessage>
-      # 10 Dr Frost tasks
+      # 30 Dr Frost tasks
       
       -- Algebra ---------------------------------------------------------------------
       
@@ -89,7 +89,7 @@
       -- Arithmetic Operations --
       * addition_subtraction
         Add and subtract whole numbers.
-      ... with 16 more tasks
+      ... with 20 more tasks
       # i Use `print(n = ...)` to see more tasks
 
 ---
@@ -97,7 +97,7 @@
     Code
       print(dr_frost_tasks(), n = Inf)
     Message <cliMessage>
-      # 26 Dr Frost tasks
+      # 30 Dr Frost tasks
       
       -- Algebra ---------------------------------------------------------------------
       
@@ -173,6 +173,17 @@
         Divide fractions by integers.
       * order_fractions
         Order fractions, possibly with decimals.
+      * mixed_addition_subtraction
+        Add or subtract proper/improper fractions.
+      * fraction_amount
+        Find a fraction of an amount.
+      * amount_before_fraction
+        Find an original amount before a fraction of it was taken.
+      
+      -- Introduction to Negative Numbers --
+      * order_negative_numbers
+        Understand negative numbers on a number line, and order a mixture of negative
+        and positive numbers.
       
       -- Times tables ----------------------------------------------------------------
       
@@ -188,7 +199,7 @@
     Code
       expect_invisible(print(dr_frost_tasks()))
     Message <cliMessage>
-      [90m# 10 Dr Frost tasks[39m
+      [90m# 30 Dr Frost tasks[39m
       
       [36m--[39m [1mAlgebra[22m [36m---------------------------------------------------------------------[39m
       
@@ -227,7 +238,7 @@
       -- [1m[1mArithmetic Operations[1m[22m --
       [36m*[39m addition_subtraction
         Add and subtract whole numbers.
-      [90m... with 16 more tasks[39m
+      [90m... with 20 more tasks[39m
       [90m# i Use `print(n = ...)` to see more tasks[39m
 
 ---
@@ -235,7 +246,7 @@
     Code
       expect_equal(print(dr_frost_tasks()), dr_frost_tasks())
     Message <cliMessage>
-      [90m# 10 Dr Frost tasks[39m
+      [90m# 30 Dr Frost tasks[39m
       
       [36m--[39m [1mAlgebra[22m [36m---------------------------------------------------------------------[39m
       
@@ -274,7 +285,7 @@
       -- [1m[1mArithmetic Operations[1m[22m --
       [36m*[39m addition_subtraction
         Add and subtract whole numbers.
-      [90m... with 16 more tasks[39m
+      [90m... with 20 more tasks[39m
       [90m# i Use `print(n = ...)` to see more tasks[39m
 
 ---
@@ -282,7 +293,7 @@
     Code
       print(dr_frost_tasks(), n = Inf)
     Message <cliMessage>
-      [90m# 26 Dr Frost tasks[39m
+      [90m# 30 Dr Frost tasks[39m
       
       [36m--[39m [1mAlgebra[22m [36m---------------------------------------------------------------------[39m
       
@@ -358,6 +369,17 @@
         Divide fractions by integers.
       [36m*[39m order_fractions
         Order fractions, possibly with decimals.
+      [36m*[39m mixed_addition_subtraction
+        Add or subtract proper/improper fractions.
+      [36m*[39m fraction_amount
+        Find a fraction of an amount.
+      [36m*[39m amount_before_fraction
+        Find an original amount before a fraction of it was taken.
+      
+      -- [1m[1mIntroduction to Negative Numbers[1m[22m --
+      [36m*[39m order_negative_numbers
+        Understand negative numbers on a number line, and order a mixture of negative
+        and positive numbers.
       
       [36m--[39m [1mTimes tables[22m [36m----------------------------------------------------------------[39m
       
@@ -373,7 +395,7 @@
     Code
       expect_invisible(print(dr_frost_tasks()))
     Message <cliMessage>
-      # 10 Dr Frost tasks
+      # 30 Dr Frost tasks
       
       ── Algebra ─────────────────────────────────────────────────────────────────────
       
@@ -412,7 +434,7 @@
       ── Arithmetic Operations ──
       • addition_subtraction
         Add and subtract whole numbers.
-      … with 16 more tasks
+      … with 20 more tasks
       # ℹ Use `print(n = ...)` to see more tasks
 
 ---
@@ -420,7 +442,7 @@
     Code
       expect_equal(print(dr_frost_tasks()), dr_frost_tasks())
     Message <cliMessage>
-      # 10 Dr Frost tasks
+      # 30 Dr Frost tasks
       
       ── Algebra ─────────────────────────────────────────────────────────────────────
       
@@ -459,7 +481,7 @@
       ── Arithmetic Operations ──
       • addition_subtraction
         Add and subtract whole numbers.
-      … with 16 more tasks
+      … with 20 more tasks
       # ℹ Use `print(n = ...)` to see more tasks
 
 ---
@@ -467,7 +489,7 @@
     Code
       print(dr_frost_tasks(), n = Inf)
     Message <cliMessage>
-      # 26 Dr Frost tasks
+      # 30 Dr Frost tasks
       
       ── Algebra ─────────────────────────────────────────────────────────────────────
       
@@ -543,6 +565,17 @@
         Divide fractions by integers.
       • order_fractions
         Order fractions, possibly with decimals.
+      • mixed_addition_subtraction
+        Add or subtract proper/improper fractions.
+      • fraction_amount
+        Find a fraction of an amount.
+      • amount_before_fraction
+        Find an original amount before a fraction of it was taken.
+      
+      ── Introduction to Negative Numbers ──
+      • order_negative_numbers
+        Understand negative numbers on a number line, and order a mixture of negative
+        and positive numbers.
       
       ── Times tables ────────────────────────────────────────────────────────────────
       
@@ -558,7 +591,7 @@
     Code
       expect_invisible(print(dr_frost_tasks()))
     Message <cliMessage>
-      [90m# 10 Dr Frost tasks[39m
+      [90m# 30 Dr Frost tasks[39m
       
       [36m──[39m [1mAlgebra[22m [36m─────────────────────────────────────────────────────────────────────[39m
       
@@ -597,7 +630,7 @@
       ── [1m[1mArithmetic Operations[1m[22m ──
       [36m•[39m addition_subtraction
         Add and subtract whole numbers.
-      [90m… with 16 more tasks[39m
+      [90m… with 20 more tasks[39m
       [90m# ℹ Use `print(n = ...)` to see more tasks[39m
 
 ---
@@ -605,7 +638,7 @@
     Code
       expect_equal(print(dr_frost_tasks()), dr_frost_tasks())
     Message <cliMessage>
-      [90m# 10 Dr Frost tasks[39m
+      [90m# 30 Dr Frost tasks[39m
       
       [36m──[39m [1mAlgebra[22m [36m─────────────────────────────────────────────────────────────────────[39m
       
@@ -644,7 +677,7 @@
       ── [1m[1mArithmetic Operations[1m[22m ──
       [36m•[39m addition_subtraction
         Add and subtract whole numbers.
-      [90m… with 16 more tasks[39m
+      [90m… with 20 more tasks[39m
       [90m# ℹ Use `print(n = ...)` to see more tasks[39m
 
 ---
@@ -652,7 +685,7 @@
     Code
       print(dr_frost_tasks(), n = Inf)
     Message <cliMessage>
-      [90m# 26 Dr Frost tasks[39m
+      [90m# 30 Dr Frost tasks[39m
       
       [36m──[39m [1mAlgebra[22m [36m─────────────────────────────────────────────────────────────────────[39m
       
@@ -728,6 +761,17 @@
         Divide fractions by integers.
       [36m•[39m order_fractions
         Order fractions, possibly with decimals.
+      [36m•[39m mixed_addition_subtraction
+        Add or subtract proper/improper fractions.
+      [36m•[39m fraction_amount
+        Find a fraction of an amount.
+      [36m•[39m amount_before_fraction
+        Find an original amount before a fraction of it was taken.
+      
+      ── [1m[1mIntroduction to Negative Numbers[1m[22m ──
+      [36m•[39m order_negative_numbers
+        Understand negative numbers on a number line, and order a mixture of negative
+        and positive numbers.
       
       [36m──[39m [1mTimes tables[22m [36m────────────────────────────────────────────────────────────────[39m
       

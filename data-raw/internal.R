@@ -26,6 +26,10 @@ tasks_df <- tibble::tribble(
   "Number", "Fractions", "equivalent_fractions", "Understand equivalent fractions.",
   "Number", "Fractions", "fraction_integer_division", "Divide fractions by integers.",
   "Number", "Fractions", "order_fractions", "Order fractions, possibly with decimals.",
+  "Number", "Fractions", "mixed_addition_subtraction", "Add or subtract proper/improper fractions.",
+  "Number", "Fractions", "fraction_amount", "Find a fraction of an amount.",
+  "Number", "Fractions", "amount_before_fraction", "Find an original amount before a fraction of it was taken.",
+  "Number", "Introduction to Negative Numbers", "order_negative_numbers", "Understand negative numbers on a number line, and order a mixture of negative and positive numbers.",
   
   "Times tables", "", "fixed_time", "You have 30 seconds to answer as many questions as you can on all times/divide tables. Can you get on the leaderboard?",
   "Times tables", "", "individual_practice", "Practise each times table/divide table separately, with points for accuracy and speed."
