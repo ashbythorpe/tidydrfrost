@@ -100,13 +100,16 @@ matches.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="perform_tasks.html">perform_tasks()</a></code></p></div>
+    <div class="dont-index">
+<ul><li><p><code><a href="print.dr_frost_tasks.html">print.dr_frost_tasks()</a></code> for the printing method for these tasks.</p></li>
+<li><p><code><a href="perform_tasks.html">perform_tasks()</a></code> for the usage of these tasks.</p></li>
+</ul></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">dr_frost_tasks</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 10 Dr Frost tasks</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 30 Dr Frost tasks</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Algebra</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -145,7 +148,7 @@ matches.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Arithmetic Operations</span> ──</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> addition_subtraction</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Add and subtract whole numbers.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">… with 16 more tasks</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">… with 20 more tasks</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more tasks</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">dr_frost_tasks</span><span class="op">(</span>include <span class="op">=</span> <span class="st">"addition_subtraction"</span><span class="op">)</span></span></span>
@@ -183,14 +186,75 @@ matches.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> estimate_calculations</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Estimate the result of a calculation by first rounding each number.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">dr_frost_tasks</span><span class="op">(</span>include <span class="op">=</span> <span class="st">"KS3 Number"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 0 Dr Frost tasks</span></span>
+<span class="r-in"><span><span class="fu">dr_frost_tasks</span><span class="op">(</span>include <span class="op">=</span> <span class="st">"Number"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 19 Dr Frost tasks</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Number</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Arithmetic Operations</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> addition_subtraction</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Add and subtract whole numbers.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> multiplication</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Multiply numbers up to 3 digit by 3 digit.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> pictoral_division</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Solve one step multiplication and division problems by using pictorial</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   representations and arrays.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> division</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Divide numbers.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> number_facts</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Using number facts to solve connected calculations.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> missing_digits</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Solve multiplication, addition and subtraction problems involving missing</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   digits.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> bidmas</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Understand the order in which operators in an expression are evaluated</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   according to BIDMAS.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> estimate_calculations</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Estimate the result of a calculation by first rounding each number.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Decimals</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> place_value</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Place value and ordering of decimals.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> decimal_addition_subtraction</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Add or subtract decimal numbers.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">… with 9 more tasks</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more tasks</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">dr_frost_tasks</span><span class="op">(</span>include <span class="op">=</span> <span class="st">"KS3"</span>, exclude <span class="op">=</span> <span class="st">"Arithmetic"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 0 Dr Frost tasks</span></span>
+<span class="r-in"><span><span class="fu">dr_frost_tasks</span><span class="op">(</span>include <span class="op">=</span> <span class="st">"Number"</span>, exclude <span class="op">=</span> <span class="st">"Arithmetic"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 11 Dr Frost tasks</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Number</span> <span style="color: #00BBBB;">──────────────────────────────────────────────────────────────────────</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Decimals</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> place_value</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Place value and ordering of decimals.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> decimal_addition_subtraction</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Add or subtract decimal numbers.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Fraction, Decimal &amp; Percentage Correspondences</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> conversion</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Convert between non-recurring decimals, fractions and percentages.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── <span style="font-weight: bold;">Fractions</span> ──</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> shape_fractions</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Find what fraction of a shape is shaded.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> equivalent_fractions</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Understand equivalent fractions.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> fraction_integer_division</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Divide fractions by integers.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> order_fractions</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Order fractions, possibly with decimals.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> mixed_addition_subtraction</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Add or subtract proper/improper fractions.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> fraction_amount</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Find a fraction of an amount.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> amount_before_fraction</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Find an original amount before a fraction of it was taken.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">… with 1 more task</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more tasks</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">dr_frost_tasks</span><span class="op">(</span>exclude <span class="op">=</span> <span class="st">"addition"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 10 Dr Frost tasks</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># 25 Dr Frost tasks</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Algebra</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -229,11 +293,11 @@ matches.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> pictoral_division</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Solve one step multiplication and division problems by using pictorial</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   representations and arrays.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">… with 12 more tasks</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">… with 15 more tasks</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more tasks</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="fu">dr_frost_tasks</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 26 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 30 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    topic                       subtopic              task_name           descr…¹</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Algebra                     Sequences             continue_sequence   Contin…</span>
@@ -246,7 +310,7 @@ matches.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Data Handling &amp; Probability Data Representation   bank_statements     Comple…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Data Handling &amp; Probability Data Representation   pie_charts          Pie Ch…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Number                      Arithmetic Operations addition_subtracti… Add an…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 16 more rows, and abbreviated variable name ¹​description</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 20 more rows, and abbreviated variable name ¹​description</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
